@@ -3,7 +3,9 @@ import { ROUTES } from "@/routes/utils";
 
 import {
   type IconDefinition,
+  faChartPie,
   faFolderTree,
+  faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
 
 export type NavItem = {
@@ -17,10 +19,24 @@ export type NavItem = {
 
 export const DASHBOARD_NAVBAR_LINKS: NavItem[] = [
   {
+    label: "Dashboard",
+    path: ROUTES.ADMIN,
+    icon: faChartPie,
+    activeIcon: faChartPie,
+    roles: [ROLES.ADMIN],
+  },
+  {
     label: "Danh mục",
     path: ROUTES.ADMIN_CATEGORIES,
     icon: faFolderTree,
     activeIcon: faFolderTree,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Quản lý chung",
+    path: ROUTES.ADMIN_GENERAL,
+    icon: faToolbox,
+    activeIcon: faToolbox,
     roles: [ROLES.ADMIN],
   },
 ];

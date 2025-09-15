@@ -1,0 +1,1 @@
+export const PROCEDURES_MODAL_NAME = "modal-procedures";

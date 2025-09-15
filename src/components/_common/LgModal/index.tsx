@@ -1,3 +1,68 @@
-export default function LgModal() {
-  return <div>LgModal</div>;
+import { useModal } from "@/hooks/useModal";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Modal, type ModalProps } from "antd";
+import { useEffect, useState, type PropsWithChildren } from "react";
+
+interface LgModalProps
+  extends Omit<ModalProps, "title" | "closeIcon">,
+    PropsWithChildren {
+  name: string;
+  title?: string;
+  closeIcon?: boolean;
+}
+
+export default function LgModal({
+  name,
+  children,
+  title,
+  closeIcon = true,
+  ...props
+}: LgModalProps) {
+  const [open, setOpen] = useState<boolean>(false);
+  const { active, closeModal, getData } = useModal();
+
+  useEffect(() => {
+    if (active === name) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }, [active, name]);
+
+  function handleClose() {
+    setOpen(false);
+    closeModal(name);
+  }
+
+  const modalTitle = title || (getData() ? "Cập nhật" : "Thêm mới");
+
+  const header = (
+    <div className="flex itesms-center justify-between">
+      <span className="font-semibold text-primary-foreground">
+        {modalTitle}
+      </span>
+      {closeIcon && (
+        <Button
+          className="text-primary-foreground"
+          type="text"
+          size="small"
+          icon={<FontAwesomeIcon icon={faX} />}
+          onClick={handleClose}
+        />
+      )}
+    </div>
+  );
+
+  return (
+    <Modal
+      open={open}
+      title={header}
+      onCancel={handleClose}
+      closeIcon={null}
+      {...props}
+    >
+      {children}
+    </Modal>
+  );
 }

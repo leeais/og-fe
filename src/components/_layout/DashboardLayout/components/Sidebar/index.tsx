@@ -5,6 +5,7 @@ import { Button, Tooltip } from "antd";
 import { useSidebar } from "@/hooks/useSidebar";
 import { DASHBOARD_NAVBAR_LINKS } from "@/constants/sidebar";
 import { cn } from "@/utils/tailwinds";
+import { ROUTES } from "@/routes/utils";
 
 export default function Sidebar() {
   const { width, isExpand } = useSidebar();
@@ -24,14 +25,14 @@ export default function Sidebar() {
           {DASHBOARD_NAVBAR_LINKS.map((item) => {
             let isActive: boolean;
 
-            if (item.path === "/admin") {
+            if (item.path === ROUTES.ROOT || item.path === ROUTES.ADMIN) {
               isActive = item.path === pathname;
             } else {
               isActive = pathname.includes(item.path);
             }
 
             return (
-              <li>
+              <li key={item.path}>
                 <Tooltip title={isExpand ? null : item.label} placement="right">
                   <Button
                     className={cn("rounded-none w-full justify-start", {

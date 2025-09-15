@@ -2,19 +2,19 @@ import { create } from "zustand";
 
 type ModalData = {
   name: string;
-  data?: any;
+  data?: unknown;
 };
 
 type ModalState = {
   stackModals: ModalData[];
-  opening: string[] | [];
+  opening: string[];
   active: string | null;
 };
 
 type ModalActions = {
-  openModal: (name: string, data?: any) => void;
-  closeModal: () => void;
-  getData: () => any;
+  openModal: (name: string, data?: unknown) => void;
+  closeModal: (name?: string) => void;
+  getData: (name?: string) => unknown;
   clearStack: () => void;
 };
 
@@ -24,16 +24,52 @@ const initialState: ModalState = {
   active: null,
 };
 
-const useModalStore = create<ModalState & ModalActions>((get, set) => ({
+interface UseModalStore extends ModalState, ModalActions {}
+
+const useModalStore = create<UseModalStore>((set, get) => ({
   ...initialState,
 
-  openModal: () => set(),
-  closeModal: () => set(),
-  closeModalByName: () => set(),
-  getData: () => set(),
-  getDataByName: () => set(),
-  removeModal: () => set(),
-  clearStack: () => set(),
+  openModal: (name: string, data?: unknown): void =>
+    set((state) => ({
+      active: name,
+      stackModals: [...state.stackModals, { name, data }],
+      opening: [...state.opening, name],
+    })),
+  closeModal: (name?: string): void =>
+    set((state) => {
+      if (name && state.opening.includes(name)) {
+        const newOpening = state.opening.filter((n) => n !== name);
+        const newStackModals = state.stackModals.filter((m) => m.name !== name);
+        return {
+          opening: newOpening,
+          stackModals: newStackModals,
+          active:
+            newOpening.length > 0 ? newOpening[newOpening.length - 1] : null,
+        };
+      } else {
+        return {
+          opening: state.opening.slice(0, -1),
+          stackModals: state.stackModals.slice(0, -1),
+          active:
+            state.opening.length > 1
+              ? state.opening[state.opening.length - 2]
+              : null,
+        };
+      }
+    }),
+  getData: (name?: string): unknown => {
+    const state = get() as ModalState;
+    if (name) {
+      const modal = state.stackModals.find((m) => m.name === name);
+      return modal ? modal.data : null;
+    }
+  },
+  clearStack: (): void =>
+    set(() => ({
+      stackModals: [],
+      opening: [],
+      active: null,
+    })),
 }));
 
 export default useModalStore;

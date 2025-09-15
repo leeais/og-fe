@@ -1,0 +1,1 @@
+export const FACULTY_MODAL_NAME = "modal-faculties";

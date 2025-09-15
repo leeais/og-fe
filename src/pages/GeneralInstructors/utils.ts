@@ -1,0 +1,1 @@
+export const INSTRUCTOR_MODAL_NAME = "modal-instructor";

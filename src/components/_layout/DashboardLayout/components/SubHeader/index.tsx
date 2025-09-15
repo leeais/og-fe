@@ -1,14 +1,54 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAnglesLeft,
+  faAnglesRight,
+  faHouse,
+} from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb, Button, Divider } from "antd";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { useSidebar } from "@/hooks/useSidebar";
-import { ROUTES } from "@/routes/utils";
+import { breadcrumbNameMap, ROUTES } from "@/routes/utils";
+import { cn } from "@/utils/tailwinds";
 
 export default function SubHeader() {
   const { toggleSidebar, isExpand } = useSidebar();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const pathSnippets = pathname.split("/").filter(Boolean);
+  const breadcrumbList = pathSnippets.map((_, index) => {
+    const url = "/" + pathSnippets.slice(0, index + 1).join("/");
+    const label = breadcrumbNameMap[url] ?? url.split("/").pop();
+
+    const routeActiving = pathname === url;
+
+    return {
+      title: (
+        <span
+          className={cn("hover:text-primary cursor-pointer", {
+            "text-primary cursor-default font-semibold": routeActiving,
+          })}
+          onClick={() => !routeActiving && navigate(url)}
+        >
+          {label}
+        </span>
+      ),
+    };
+  });
+
+  breadcrumbList.unshift({
+    title: (
+      <span
+        className={cn("hover:text-primary cursor-pointer", {
+            "text-primary cursor-default font-semibold": pathname === ROUTES.ROOT,
+          })}
+        onClick={() => pathname !== ROUTES.ROOT && navigate(ROUTES.ROOT)}
+      >
+        <FontAwesomeIcon icon={faHouse} />
+      </span>
+    ),
+  });
   return (
     <div className="relative">
       <div className="h-10 flex items-center border-b gap-2 px-2 bg-background">
@@ -20,23 +60,7 @@ export default function SubHeader() {
           onClick={toggleSidebar}
         />
         <Divider size="large" type="vertical" />
-        <Breadcrumb
-          items={[
-            {
-              title: (
-                <span
-                  className="cursor-pointer hover:text-primary"
-                  onClick={() => navigate(ROUTES.ADMIN)}
-                >
-                  Dashboard
-                </span>
-              ),
-            },
-            {
-              title: "Danh mục",
-            },
-          ]}
-        />
+        <Breadcrumb items={breadcrumbList} />
       </div>
     </div>
   );

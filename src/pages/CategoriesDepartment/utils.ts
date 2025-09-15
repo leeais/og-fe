@@ -1,0 +1,1 @@
+export const DEPARTMENT_MODAL_NAME = "modal-department";
