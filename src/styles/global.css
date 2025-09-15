@@ -1,0 +1,16 @@
+@layer theme, base, antd, components, utilities;
+
+@import "./font-face.css";
+@import "./tailwind.css";
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50 font-quicksand font-medium;
+  }
+  body {
+    @apply bg-background text-foreground text-sm;
+  }
+}
+
+@layer components {
+}
