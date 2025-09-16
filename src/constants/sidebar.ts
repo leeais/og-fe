@@ -4,6 +4,7 @@ import { ROUTES } from "@/routes/utils";
 import {
   type IconDefinition,
   faChartPie,
+  faFolderOpen,
   faFolderTree,
   faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +24,13 @@ export const DASHBOARD_NAVBAR_LINKS: NavItem[] = [
     path: ROUTES.ADMIN,
     icon: faChartPie,
     activeIcon: faChartPie,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Thủ tục hành chính",
+    path: ROUTES.ADMIN_PROCEDURES,
+    icon: faFolderOpen,
+    activeIcon: faFolderOpen,
     roles: [ROLES.ADMIN],
   },
   {

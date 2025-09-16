@@ -3,10 +3,13 @@ import { Outlet } from "react-router";
 import Header from "@/components/_layout/DashboardLayout/components/Header";
 import Sidebar from "@/components/_layout/DashboardLayout/components/Sidebar";
 import SubHeader from "@/components/_layout/DashboardLayout/components/SubHeader";
+import RolesGuard from "@/components/RolesGuard";
+import { ROLES } from "@/config/roles";
 
 export default function DashboardLayout() {
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <RolesGuard hasRoles={[ROLES.ADMIN, ROLES.INSTRUCTOR, ROLES.STUDENT]}>
+      <div className="w-full min-h-screen flex flex-col">
       <Header />
       <div className="flex-1 flex">
         <Sidebar />
@@ -16,5 +19,6 @@ export default function DashboardLayout() {
         </main>
       </div>
     </div>
+    </RolesGuard>
   );
 }

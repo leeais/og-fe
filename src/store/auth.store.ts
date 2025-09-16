@@ -8,7 +8,7 @@ type AuthState = {
 };
 
 type AuthActions = {
-  login: (user: User, token: string) => void;
+  setCredentials: (user: User, token: string) => void;
   logout: () => void;
 };
 
@@ -23,7 +23,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
     (set) => ({
       ...initialState,
 
-      login: (user, token) => set({ user, token, isAuthenticated: true }),
+      setCredentials: (user, token) => set({ user, token, isAuthenticated: true }),
       logout: () => set(initialState),
     }),
     { name: 'auth' }

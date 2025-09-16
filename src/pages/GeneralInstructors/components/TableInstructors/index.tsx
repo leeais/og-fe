@@ -1,14 +1,16 @@
 import LgTable from "@/components/_common/LgTable";
-import { useEffect, useState } from "react";
 import type { Instructor } from "./utils";
 import { columns } from "./columns";
+import { useQuery } from "@tanstack/react-query";
+import { instructorService } from "@/services/instructor.service";
 
 export default function TableInstructors() {
-  const [dataSource, setDataSource] = useState<Instructor[]>([]);
-  
-  useEffect(() => {
-    setDataSource([])
-  }, []);
+  const { data, isPending } = useQuery({
+    queryKey: ["departments"],
+    queryFn: instructorService.getInstructors,
+  });
 
-  return <LgTable<Instructor> columns={columns} dataSource={dataSource} />;
+  if (isPending) return <div>Loading...</div>;
+
+  return <LgTable<Instructor> columns={columns} dataSource={data?.data || []} />;
 }

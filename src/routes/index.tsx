@@ -8,13 +8,20 @@ const DashboardLayout = lazy(
 );
 const Categories = lazy(() => import("@/pages/Categories"));
 const CategoriesProcedures = lazy(() => import("@/pages/CategoriesProcedures"));
-const CategoriesDepartments = lazy(() => import("@/pages/CategoriesDepartment"));
+const CategoriesDepartments = lazy(
+  () => import("@/pages/CategoriesDepartment")
+);
 const CategoriesFaculties = lazy(() => import("@/pages/CategoriesFaculties"));
 const General = lazy(() => import("@/pages/General"));
 const GeneralInstructors = lazy(() => import("@/pages/GeneralInstructors"));
 const GeneralStudents = lazy(() => import("@/pages/GeneralStudents"));
 const GeneralAccounts = lazy(() => import("@/pages/GeneralAccounts"));
 // const GeneralRoles = lazy(() => import("@/pages/GeneralRoles"));
+const Login = lazy(() => import("@/pages/Login"));
+const Profile = lazy(() => import("@/pages/Profile"));
+const Procedures = lazy(() => import('@/pages/Procedures'))
+
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const router = createBrowserRouter([
   {
@@ -62,12 +69,28 @@ const router = createBrowserRouter([
             element: <GeneralAccounts />,
           },
           {
+            path: ROUTES.ADMIN_PROCEDURES,
+            element: <Procedures />,
+          },
+          {
             path: ROUTES.ADMIN_GENERAL_ROLES,
             element: <div>Roles</div>,
-          }
+          },
         ],
       },
+      {
+        path: ROUTES.PROFILE,
+        element: <Profile />,
+      },
     ],
+  },
+  {
+    path: ROUTES.LOGIN,
+    element: <Login />,
+  },
+  {
+    path: ROUTES.NOT_FOUND,
+    element: <NotFound />,
   },
 ]);
 

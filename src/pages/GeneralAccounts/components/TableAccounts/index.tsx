@@ -1,14 +1,16 @@
 import LgTable from "@/components/_common/LgTable";
-import { useEffect, useState } from "react";
 import type { Account } from "./utils";
 import { columns } from "./columns";
+import { accountService } from "@/services/account.service";
+import { useQuery } from "@tanstack/react-query";
 
 export default function TableAccounts() {
-  const [dataSource, setDataSource] = useState<Account[]>([]);
-  
-  useEffect(() => {
-    setDataSource([])
-  }, []);
+  const { data, isPending } = useQuery({
+    queryKey: ["departments"],
+    queryFn: accountService.getAccounts,
+  });
 
-  return <LgTable<Account> columns={columns} dataSource={dataSource} />;
+  if (isPending) return <div>Loading...</div>;
+
+  return <LgTable<Account> columns={columns} dataSource={data?.data || []} />;
 }

@@ -10,6 +10,7 @@ interface LgModalProps
   name: string;
   title?: string;
   closeIcon?: boolean;
+  showHeader?: boolean;
 }
 
 export default function LgModal({
@@ -17,6 +18,7 @@ export default function LgModal({
   children,
   title,
   closeIcon = true,
+  showHeader = true,
   ...props
 }: LgModalProps) {
   const [open, setOpen] = useState<boolean>(false);
@@ -57,7 +59,7 @@ export default function LgModal({
   return (
     <Modal
       open={open}
-      title={header}
+      title={showHeader ? header : null}
       onCancel={handleClose}
       closeIcon={null}
       {...props}

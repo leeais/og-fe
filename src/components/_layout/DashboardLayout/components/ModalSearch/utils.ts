@@ -1,0 +1,1 @@
+export const SEARCH_MODAL_NAME = 'search-modal-name';

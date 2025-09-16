@@ -1,0 +1,22 @@
+import type { ProcedureFormValues } from "@/pages/CategoriesProcedures/components/ModalProcedues/utils";
+import api from "./api.service";
+
+class ProcedureService {
+  getProcedures() {
+    return api.get("/request-types");
+  }
+  getProcedureById(id: string) {
+    return api.get(`/request-types/${id}`);
+  }
+  createProcedure(data: ProcedureFormValues) {
+    return api.post("/request-types", data);
+  }
+  updateProcedure(id: string, data: Partial<ProcedureFormValues>) {
+    return api.put(`/request-types/${id}`, data);
+  }
+  deleteProcedure(id: string) {
+    return api.delete(`/request-types/${id}`);
+  }
+}
+
+export const procedureService = new ProcedureService();

@@ -1,5 +1,5 @@
 import type { DepartmentFormValues } from "@/pages/CategoriesDepartment/components/ModalDepartment/utils";
-import api from "./api.services";
+import api from "./api.service";
 
 class DepartmentsService {
   getDepartments() {

@@ -1,14 +1,16 @@
 import LgTable from "@/components/_common/LgTable";
-import { useEffect, useState } from "react";
 import type { Faculty } from "./utils";
 import { columns } from "./columns";
+import { useQuery } from "@tanstack/react-query";
+import { facultyService } from "@/services/faculty.service";
 
 export default function TableFaculties() {
-  const [dataSource, setDataSource] = useState<Faculty[]>([]);
-  
-  useEffect(() => {
-    setDataSource([])
-  }, []);
+  const { data, isPending } = useQuery({
+    queryKey: ['faculties'],
+    queryFn: facultyService.getFaculties,
+  })
 
-  return <LgTable<Faculty> columns={columns} dataSource={dataSource} />;
+  if (isPending) return <div>Loading...</div>;
+
+  return <LgTable<Faculty> columns={columns} dataSource={data?.data || []} />;
 }

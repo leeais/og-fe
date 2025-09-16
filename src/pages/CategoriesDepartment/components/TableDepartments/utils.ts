@@ -4,7 +4,6 @@ export type Department = {
   shortName: string;
   avatar: string;
   bio: string;
-  fee: number;
   createdAt: string;
   updatedAt: string;
 };

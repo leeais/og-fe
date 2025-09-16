@@ -1,6 +1,5 @@
 import { type RoleEnum } from '@/config/roles';
 import { useAuth } from '@/hooks/useAuth';
-import NotFound from '@/pages/NotFound';
 import { ROUTES } from '@/routes/utils';
 import { redirectByRole } from '@/utils/guards';
 import { type PropsWithChildren } from 'react';
@@ -28,7 +27,7 @@ export default function RolesGuard({
 
   if (!hasRoles.some((role) => userRoles?.includes(role))) {
     if (redirectTo) return <Navigate to={redirectTo} />;
-    if (showNotFoundPage) return <NotFound />;
+    if (showNotFoundPage) return <Navigate to={ROUTES.NOT_FOUND} />;
     return <Navigate to={redirectByRole(currentUser)} />;
   }
 
