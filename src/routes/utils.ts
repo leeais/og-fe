@@ -2,11 +2,12 @@ export const ROUTES = {
   ROOT: "/",
 
   LOGIN: "/login",
-  PROFILE: '/profile',
+  PROFILE: "/profile",
+  SETTINGS: "/settings",
 
   INSTRUCTORS: "/instructors",
   ADMIN: "/admin",
-  ADMIN_PROCEDURES: '/admin/procedures',
+  ADMIN_PROCEDURES: "/admin/procedures",
 
   ADMIN_CATEGORIES: "/admin/categories",
   ADMIN_CATEGORIES_PROCEDURES: "/admin/categories/procedures",
@@ -33,5 +34,5 @@ export const breadcrumbNameMap = {
   [ROUTES.ADMIN_GENERAL_STUDENTS]: "Quản lý sinh viên",
   [ROUTES.ADMIN_GENERAL_INSTRUCTORS]: "Quản lý giáo viên",
   [ROUTES.PROFILE]: "Cài đặt tài khoản",
-  [ROUTES.ADMIN_PROCEDURES]: "Thủ tục hành chính"
+  [ROUTES.ADMIN_PROCEDURES]: "Thủ tục hành chính",
 };

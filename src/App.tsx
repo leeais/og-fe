@@ -4,10 +4,8 @@ import viVN from "antd/locale/vi_VN";
 import { ConfigProvider } from "antd";
 import dayjs from "dayjs";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-import "dayjs/locale/vi";
-
 import AppRouter from "@/routes";
+import "dayjs/locale/vi";
 
 dayjs.locale("vi");
 

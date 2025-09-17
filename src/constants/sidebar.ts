@@ -6,6 +6,7 @@ import {
   faChartPie,
   faFolderOpen,
   faFolderTree,
+  faGear,
   faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -45,6 +46,13 @@ export const DASHBOARD_NAVBAR_LINKS: NavItem[] = [
     path: ROUTES.ADMIN_GENERAL,
     icon: faToolbox,
     activeIcon: faToolbox,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Cài đặt",
+    path: ROUTES.SETTINGS,
+    icon: faGear,
+    activeIcon: faGear,
     roles: [ROLES.ADMIN],
   },
 ];

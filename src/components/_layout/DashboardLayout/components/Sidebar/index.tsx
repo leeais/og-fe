@@ -32,7 +32,12 @@ export default function Sidebar() {
             }
 
             return (
-              <li key={item.path}>
+              <li
+                className={cn({
+                  "mt-auto": item.label === "Cài đặt",
+                })}
+                key={item.path}
+              >
                 <Tooltip title={isExpand ? null : item.label} placement="right">
                   <Button
                     className={cn("rounded-none w-full justify-start", {

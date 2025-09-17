@@ -21,8 +21,7 @@ api.interceptors.response.use(
   (response) => response.data,
   (error) => {
     if (error.response && error.response.status === 401) {
-      console.log(error);
-      // useAuthStore.getState().logout();
+      useAuthStore.getState().logout();
     }
     return Promise.reject(error);
   }
