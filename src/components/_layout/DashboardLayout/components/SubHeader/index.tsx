@@ -55,16 +55,19 @@ export default function SubHeader() {
       ),
     });
   return (
-    <div className="h-10 w-full flex items-center border-b gap-2 px-2 bg-background sticky top-12 z-40">
-      <Button
-        type="text"
-        icon={
-          <FontAwesomeIcon icon={isExpand ? faAnglesLeft : faAnglesRight} />
-        }
-        onClick={toggleSidebar}
-      />
-      <Divider size="large" type="vertical" />
-      <Breadcrumb items={breadcrumbList} />
+    <div className="relative">
+      <div className="h-10 w-full" />
+      <div className="h-10 w-full flex items-center border-b gap-2 px-2 bg-background fixed top-12 z-40">
+        <Button
+          type="text"
+          icon={
+            <FontAwesomeIcon icon={isExpand ? faAnglesLeft : faAnglesRight} />
+          }
+          onClick={toggleSidebar}
+        />
+        <Divider size="large" type="vertical" />
+        <Breadcrumb items={breadcrumbList} />
+      </div>
     </div>
   );
 }

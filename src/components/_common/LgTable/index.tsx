@@ -51,8 +51,8 @@ export default function LgTable<T>({
     selectedRowKeys,
     onChange: handleChange,
     renderCell: (
-      value: boolean,
-      record: T,
+      _value: boolean,
+      _record: T,
       index: number,
       originNode: React.ReactNode
     ) => {

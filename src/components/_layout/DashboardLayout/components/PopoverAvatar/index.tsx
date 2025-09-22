@@ -30,7 +30,7 @@ export default function PopoverAvatar() {
   const content = (
     <div className="min-w-xs flex flex-col gap-2">
       <div className="flex justify-between items-start">
-        <div className="flex items-end gap-2">
+        <div className="flex items-center gap-2">
           <Image
             className="rounded-full border border-border overflow-hidden"
             width={50}

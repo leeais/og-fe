@@ -23,7 +23,7 @@ export default function Sidebar() {
         style={{ width }}
       />
       <div
-        className="fixed top-12 left-0 h-[calc(100vh-56px)] transition-[width] delay-200 ease-in-out border-r flex flex-col pt-10 z-50"
+        className="fixed top-12 bg-background left-0 h-[calc(100vh-56px)] transition-[width] delay-200 ease-in-out border-r flex flex-col pt-10 z-50"
         style={{ width }}
       >
         <nav className="flex-1 overflow-x-hidden overflow-y-auto">

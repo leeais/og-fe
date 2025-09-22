@@ -1,9 +1,9 @@
-import { type RoleEnum } from '@/config/roles';
-import { useAuth } from '@/hooks/useAuth';
-import { ROUTES } from '@/routes/utils';
-import { redirectByRole } from '@/utils/guards';
-import { type PropsWithChildren } from 'react';
-import { Navigate } from 'react-router';
+import { type RoleEnum } from "@/config/roles";
+import { useAuth } from "@/hooks/useAuth";
+import { ROUTES } from "@/routes/utils";
+import { redirectByRole } from "@/utils/guards";
+import { type PropsWithChildren } from "react";
+import { Navigate } from "react-router";
 
 type RolesGuardProps = PropsWithChildren & {
   hasRoles: RoleEnum[];

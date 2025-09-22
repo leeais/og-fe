@@ -5,8 +5,8 @@ declare interface User {
   firstName?: string;
   lastName?: string;
   avatarUrl?: string;
-  createdAt: Date;
-  updatedAt: Date;
   isActive: boolean;
   roles?: RoleEnum[];
+  createdAt: Date;
+  updatedAt?: Date;
 }

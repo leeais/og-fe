@@ -1,16 +1,13 @@
 import { Button, Form, Input } from "antd";
-import type { LoginFormValues } from "./utils";
+import { DUMMY_USER, type LoginFormValues } from "./utils";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/auth.service";
 import GuestOnlyRoute from "@/components/GuestOnlyRoute";
 import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router";
-import { ROUTES } from "@/routes/utils";
 
 export default function Login() {
   const [form] = Form.useForm();
   const { setCredentials } = useAuth();
-  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: authService.login,
@@ -22,7 +19,9 @@ export default function Login() {
       });
       const token = data.data.token;
       setCredentials({ ...user, roles }, token);
-      navigate(ROUTES.ROOT);
+    },
+    onError: () => {
+      if (import.meta.env.DEV) setCredentials(DUMMY_USER, "mocktoken");
     },
   });
 
@@ -56,7 +55,7 @@ export default function Login() {
             htmlType="submit"
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? "Đang đăng nhập" : "Đăng nhập"}
+            {mutation.isPending ? "Đăng nhập..." : "Đăng nhập"}
           </Button>
         </Form>
       </div>
