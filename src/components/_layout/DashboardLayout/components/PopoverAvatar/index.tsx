@@ -12,7 +12,10 @@ import { useNavigate } from "react-router";
 import { ROUTES } from "@/routes/utils";
 import { useModal } from "@/hooks/useModal";
 import LgModal from "@/components/_common/LgModal";
-import { CHANGE_PASSWORD_MODAL_NAME, type ChangePasswordFormType } from "./utils";
+import {
+  CHANGE_PASSWORD_MODAL_NAME,
+  type ChangePasswordFormType,
+} from "./utils";
 
 export default function PopoverAvatar() {
   const { currentUser, logout } = useAuth();
@@ -55,7 +58,7 @@ export default function PopoverAvatar() {
         variant="link"
         onClick={() => navigate(ROUTES.PROFILE)}
       >
-        Cài đặt tài khoản
+        Thông tin tài khoản
       </Button>
       <Button
         className="justify-start"
@@ -66,10 +69,16 @@ export default function PopoverAvatar() {
       >
         Đổi mật khẩu
       </Button>
-      <LgModal width={450} name={CHANGE_PASSWORD_MODAL_NAME} title="Cập nhật" onOk={form.submit} onCancel={() => {
-        form.resetFields()
-        closeModal();
-      }}>
+      <LgModal
+        width={450}
+        name={CHANGE_PASSWORD_MODAL_NAME}
+        title="Cập nhật"
+        onOk={form.submit}
+        onCancel={() => {
+          form.resetFields();
+          closeModal();
+        }}
+      >
         <Form className="space-y-4" form={form} onFinish={handleChangePassword}>
           <Form.Item name="oldPassword">
             <Input.Password placeholder="Nhập mật khẩu cũ" />

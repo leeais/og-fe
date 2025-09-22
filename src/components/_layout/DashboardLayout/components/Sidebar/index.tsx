@@ -6,11 +6,16 @@ import { useSidebar } from "@/hooks/useSidebar";
 import { DASHBOARD_NAVBAR_LINKS } from "@/constants/sidebar";
 import { cn } from "@/utils/tailwinds";
 import { ROUTES } from "@/routes/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Sidebar() {
   const { width, isExpand } = useSidebar();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { roles } = useAuth();
+
+  console.log(roles);
+
   return (
     <aside>
       <div
@@ -23,6 +28,8 @@ export default function Sidebar() {
       >
         <nav className="flex-1 overflow-x-hidden overflow-y-auto">
           {DASHBOARD_NAVBAR_LINKS.map((item) => {
+            if (!roles?.some((role) => item.roles?.includes(role))) return;
+
             let isActive: boolean;
 
             if (item.path === ROUTES.ROOT || item.path === ROUTES.ADMIN) {

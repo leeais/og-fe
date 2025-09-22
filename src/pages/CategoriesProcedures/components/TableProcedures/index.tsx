@@ -10,7 +10,11 @@ export default function TableProcedures() {
     queryFn: procedureService.getProcedures,
   });
 
-  if (isPending) return <div>Loading...</div>;
-
-  return <LgTable<Procedure> columns={columns} dataSource={data?.data || []} />;
+  return (
+    <LgTable<Procedure>
+      columns={columns}
+      isLoading={isPending}
+      dataSource={data?.data || []}
+    />
+  );
 }

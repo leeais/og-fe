@@ -10,7 +10,11 @@ export default function TableInstructors() {
     queryFn: instructorService.getInstructors,
   });
 
-  if (isPending) return <div>Loading...</div>;
-
-  return <LgTable<Instructor> columns={columns} dataSource={data?.data || []} />;
+  return (
+    <LgTable<Instructor>
+      columns={columns}
+      isLoading={isPending}
+      dataSource={data?.data || []}
+    />
+  );
 }

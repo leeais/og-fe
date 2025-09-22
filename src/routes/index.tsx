@@ -2,6 +2,9 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 
 import { ROUTES } from "@/routes/utils";
 import { lazy, Suspense } from "react";
+import { ROLES } from "@/config/roles";
+
+const Requests = lazy(() => import("@/pages/Requests"));
 
 const DashboardLayout = lazy(
   () => import("@/components/_layout/DashboardLayout")
@@ -19,8 +22,9 @@ const GeneralAccounts = lazy(() => import("@/pages/GeneralAccounts"));
 // const GeneralRoles = lazy(() => import("@/pages/GeneralRoles"));
 const Login = lazy(() => import("@/pages/Login"));
 const Profile = lazy(() => import("@/pages/Profile"));
-const Procedures = lazy(() => import('@/pages/Procedures'))
+const Procedures = lazy(() => import("@/pages/Procedures"));
 
+const RolesGuard = lazy(() => import("@/components/RolesGuard"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const router = createBrowserRouter([
@@ -29,12 +33,50 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
+        path: ROUTES.REQUESTS,
+        element: <Requests />,
+      },
+      {
+        path: ROUTES.REQUESTS_ADD,
+        element: <>tạo yêu cầu page</>,
+      },
+      {
+        path: ROUTES.DOCUMENTS,
+        element: <>document page</>,
+      },
+      {
+        path: ROUTES.PROFILE,
+        element: <Profile />,
+      },
+      {
+        path: ROUTES.INSTRUCTORS,
+        element: (
+          <RolesGuard hasRoles={[ROLES.INSTRUCTOR]}>
+            <Outlet />
+          </RolesGuard>
+        ),
+        children: [
+          {
+            index: true,
+            element: <>Instructor dashboard</>,
+          },
+        ],
+      },
+      {
         path: ROUTES.ADMIN,
-        element: <Outlet />,
+        element: (
+          <RolesGuard hasRoles={[ROLES.ADMIN]}>
+            <Outlet />
+          </RolesGuard>
+        ),
         children: [
           {
             index: true,
             element: <div>Dashboard</div>,
+          },
+          {
+            path: ROUTES.ADMIN_PROCEDURES,
+            element: <Procedures />,
           },
           {
             path: ROUTES.ADMIN_CATEGORIES,
@@ -69,18 +111,10 @@ const router = createBrowserRouter([
             element: <GeneralAccounts />,
           },
           {
-            path: ROUTES.ADMIN_PROCEDURES,
-            element: <Procedures />,
-          },
-          {
             path: ROUTES.ADMIN_GENERAL_ROLES,
             element: <div>Roles</div>,
           },
         ],
-      },
-      {
-        path: ROUTES.PROFILE,
-        element: <Profile />,
       },
     ],
   },

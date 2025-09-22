@@ -50,12 +50,13 @@ export default function Login() {
             <Input.Password size="large" />
           </Form.Item>
           <Button
-            className="w-full mt-4"
+            className="w-full mt-4 disabled:bg-accent disabled:text-accent-foreground"
             size="large"
             type="primary"
             htmlType="submit"
+            disabled={mutation.isPending}
           >
-            Submit
+            {mutation.isPending ? "Đang đăng nhập" : "Đăng nhập"}
           </Button>
         </Form>
       </div>

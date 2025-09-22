@@ -9,7 +9,7 @@ import { useState, type Key } from "react";
 interface LgTableProps<T>
   extends Omit<
     TableProps<T>,
-    "size" | "columns" | "dataSource" | "rowSelection"
+    "size" | "columns" | "dataSource" | "rowSelection" | "loading"
   > {
   wrapperClassnames?: string;
   size?: TableProps<T>["size"];
@@ -20,6 +20,7 @@ interface LgTableProps<T>
     onSelectedRowKeysChange?: (keys: Key[]) => void;
     onSelectedRowsChange?: (keys: Key[], rows: T[]) => void;
   };
+  isLoading?: boolean;
 }
 
 export default function LgTable<T>({
@@ -28,6 +29,7 @@ export default function LgTable<T>({
   columns,
   dataSource,
   rowSelection,
+  isLoading,
   ...props
 }: LgTableProps<T>) {
   const [internalKeys, setInternalKeys] = useState<Key[]>([]);
@@ -70,7 +72,7 @@ export default function LgTable<T>({
     key: "actions",
     dataIndex: "actions",
     fixed: "right",
-    align: 'right',
+    align: "right",
     width: 100,
     render: () => (
       <div className="flex gap-1 items-center justify-center">
@@ -105,6 +107,7 @@ export default function LgTable<T>({
         columns={mergedColumns}
         dataSource={dataSource}
         size={size}
+        loading={isLoading}
         scroll={{ x: "max-content" }}
         pagination={{
           pageSize: 10,

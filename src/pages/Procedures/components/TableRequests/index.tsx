@@ -10,7 +10,11 @@ export default function TableRequests() {
     queryFn: requestService.getRequests,
   });
 
-  if (isPending) return <div>Loading...</div>;
-
-  return <LgTable<Request> columns={columns} dataSource={data?.data || []} />;
+  return (
+    <LgTable<Request>
+      columns={columns}
+      isLoading={isPending}
+      dataSource={data?.data || []}
+    />
+  );
 }

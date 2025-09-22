@@ -10,11 +10,14 @@ import { useLocation, useNavigate } from "react-router";
 import { useSidebar } from "@/hooks/useSidebar";
 import { breadcrumbNameMap, ROUTES } from "@/routes/utils";
 import { cn } from "@/utils/tailwinds";
+import { useAuth } from "@/hooks/useAuth";
+import { ROLES } from "@/config/roles";
 
 export default function SubHeader() {
   const { toggleSidebar, isExpand } = useSidebar();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { roles } = useAuth();
 
   const pathSnippets = pathname.split("/").filter(Boolean);
   const breadcrumbList = pathSnippets.map((_, index) => {
@@ -37,31 +40,31 @@ export default function SubHeader() {
     };
   });
 
-  breadcrumbList.unshift({
-    title: (
-      <span
-        className={cn("hover:text-primary cursor-pointer", {
-            "text-primary cursor-default font-semibold": pathname === ROUTES.ROOT,
+  if (roles?.includes(ROLES.STUDENT))
+    breadcrumbList.unshift({
+      title: (
+        <span
+          className={cn("hover:text-primary cursor-pointer", {
+            "text-primary cursor-default font-semibold":
+              pathname === ROUTES.ROOT,
           })}
-        onClick={() => pathname !== ROUTES.ROOT && navigate(ROUTES.ROOT)}
-      >
-        <FontAwesomeIcon icon={faHouse} />
-      </span>
-    ),
-  });
+          onClick={() => pathname !== ROUTES.ROOT && navigate(ROUTES.ROOT)}
+        >
+          <FontAwesomeIcon icon={faHouse} />
+        </span>
+      ),
+    });
   return (
-    <div className="relative">
-      <div className="h-10 flex items-center border-b gap-2 px-2 bg-background">
-        <Button
-          type="text"
-          icon={
-            <FontAwesomeIcon icon={isExpand ? faAnglesLeft : faAnglesRight} />
-          }
-          onClick={toggleSidebar}
-        />
-        <Divider size="large" type="vertical" />
-        <Breadcrumb items={breadcrumbList} />
-      </div>
+    <div className="h-10 w-full flex items-center border-b gap-2 px-2 bg-background sticky top-12 z-40">
+      <Button
+        type="text"
+        icon={
+          <FontAwesomeIcon icon={isExpand ? faAnglesLeft : faAnglesRight} />
+        }
+        onClick={toggleSidebar}
+      />
+      <Divider size="large" type="vertical" />
+      <Breadcrumb items={breadcrumbList} />
     </div>
   );
 }

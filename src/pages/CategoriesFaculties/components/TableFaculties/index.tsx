@@ -6,11 +6,15 @@ import { facultyService } from "@/services/faculty.service";
 
 export default function TableFaculties() {
   const { data, isPending } = useQuery({
-    queryKey: ['faculties'],
+    queryKey: ["faculties"],
     queryFn: facultyService.getFaculties,
-  })
+  });
 
-  if (isPending) return <div>Loading...</div>;
-
-  return <LgTable<Faculty> columns={columns} dataSource={data?.data || []} />;
+  return (
+    <LgTable<Faculty>
+      columns={columns}
+      isLoading={isPending}
+      dataSource={data?.data || []}
+    />
+  );
 }

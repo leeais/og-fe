@@ -10,7 +10,11 @@ export default function TableAccounts() {
     queryFn: accountService.getAccounts,
   });
 
-  if (isPending) return <div>Loading...</div>;
-
-  return <LgTable<Account> columns={columns} dataSource={data?.data || []} />;
+  return (
+    <LgTable<Account>
+      columns={columns}
+      isLoading={isPending}
+      dataSource={data?.data || []}
+    />
+  );
 }

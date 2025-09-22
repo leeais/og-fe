@@ -4,9 +4,13 @@ import { ROUTES } from "@/routes/utils";
 import {
   type IconDefinition,
   faChartPie,
+  faCodePullRequest,
+  faFileCirclePlus,
+  faFolder,
   faFolderOpen,
   faFolderTree,
   faGear,
+  faHouse,
   faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,7 +23,39 @@ export type NavItem = {
   roles?: RoleEnum[];
 };
 
+// const allRoles: RoleEnum[] = [ROLES.ADMIN, ROLES.INSTRUCTOR, ROLES.STUDENT];
+const userRoles: RoleEnum[] = [ROLES.INSTRUCTOR, ROLES.STUDENT];
+
 export const DASHBOARD_NAVBAR_LINKS: NavItem[] = [
+  {
+    label: "Trang chủ",
+    path: ROUTES.ROOT,
+    icon: faHouse,
+    activeIcon: faHouse,
+    roles: [ROLES.STUDENT],
+  },
+  {
+    label: "Tạo yêu cầu",
+    path: ROUTES.REQUESTS_ADD,
+    icon: faFileCirclePlus,
+    activeIcon: faFileCirclePlus,
+    roles: userRoles,
+  },
+  {
+    label: "Quản lý yêu cầu",
+    path: ROUTES.REQUESTS,
+    icon: faCodePullRequest,
+    activeIcon: faCodePullRequest,
+    roles: userRoles,
+  },
+  {
+    label: "Quản lý tài liệu",
+    path: ROUTES.DOCUMENTS,
+    icon: faFolder,
+    activeIcon: faFolder,
+    roles: userRoles,
+  },
+  // admin
   {
     label: "Dashboard",
     path: ROUTES.ADMIN,

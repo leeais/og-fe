@@ -10,7 +10,11 @@ export default function TableDepartments() {
     queryFn: departmentService.getDepartments,
   });
 
-  if (isPending) return <div>Loading...</div>;
-
-  return <LgTable<Department> columns={columns} dataSource={data?.data || []} />;
+  return (
+    <LgTable<Department>
+      columns={columns}
+      isLoading={isPending}
+      dataSource={data?.data || []}
+    />
+  );
 }

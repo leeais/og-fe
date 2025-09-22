@@ -9,16 +9,18 @@ import { ROLES } from "@/config/roles";
 export default function DashboardLayout() {
   return (
     <RolesGuard hasRoles={[ROLES.ADMIN, ROLES.INSTRUCTOR, ROLES.STUDENT]}>
-      <div className="w-full min-h-screen flex flex-col">
-      <Header />
-      <div className="flex-1 flex">
-        <Sidebar />
-        <main className="flex-1 overflow-x-hidden bg-accent">
-          <SubHeader />
-          <Outlet />
-        </main>
+      <div className="w-full flex flex-col min-h-screen">
+        <Header />
+        <div className="flex-1 flex">
+          <Sidebar />
+          <main className="flex-1 flex flex-col">
+            <SubHeader />
+            <div className="flex-1 overflow-x-hidden bg-accent">
+              <Outlet />
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
     </RolesGuard>
   );
 }

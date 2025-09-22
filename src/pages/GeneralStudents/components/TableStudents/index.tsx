@@ -10,7 +10,11 @@ export default function TableStudents() {
     queryFn: studentService.getStudents,
   });
 
-  if (isPending) return <div>Loading...</div>;
-
-  return <LgTable<Student> columns={columns} dataSource={data?.data || []} />;
+  return (
+    <LgTable<Student>
+      columns={columns}
+      isLoading={isPending}
+      dataSource={data?.data || []}
+    />
+  );
 }

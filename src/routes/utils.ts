@@ -5,7 +5,14 @@ export const ROUTES = {
   PROFILE: "/profile",
   SETTINGS: "/settings",
 
+  NOT_FOUND: "/not-found",
+
+  REQUESTS: "/requests",
+  REQUESTS_ADD: "/add-request",
+  DOCUMENTS: "/documents",
+
   INSTRUCTORS: "/instructors",
+
   ADMIN: "/admin",
   ADMIN_PROCEDURES: "/admin/procedures",
 
@@ -19,11 +26,10 @@ export const ROUTES = {
   ADMIN_GENERAL_STUDENTS: "/admin/general/students",
   ADMIN_GENERAL_ACCOUNTS: "/admin/general/accounts",
   ADMIN_GENERAL_ROLES: "/admin/general/roles",
-
-  NOT_FOUND: "/not-found",
 };
 
 export const breadcrumbNameMap = {
+  [ROUTES.REQUESTS]: "Lịch sử yêu cầu",
   [ROUTES.ADMIN]: "Dashboard",
   [ROUTES.ADMIN_CATEGORIES]: "Danh mục",
   [ROUTES.ADMIN_CATEGORIES_PROCEDURES]: "Danh mục thủ tục",
@@ -33,6 +39,8 @@ export const breadcrumbNameMap = {
   [ROUTES.ADMIN_GENERAL_ACCOUNTS]: "Quản lý tài khoản",
   [ROUTES.ADMIN_GENERAL_STUDENTS]: "Quản lý sinh viên",
   [ROUTES.ADMIN_GENERAL_INSTRUCTORS]: "Quản lý giáo viên",
-  [ROUTES.PROFILE]: "Cài đặt tài khoản",
+  [ROUTES.PROFILE]: "Thông tin tài khoản",
   [ROUTES.ADMIN_PROCEDURES]: "Thủ tục hành chính",
+  [ROUTES.REQUESTS_ADD]: "Tạo yêu cầu hỗ trợ",
+  [ROUTES.DOCUMENTS]: "Quản lý tài liệu",
 };
