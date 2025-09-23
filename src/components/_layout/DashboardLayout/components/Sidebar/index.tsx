@@ -12,9 +12,7 @@ export default function Sidebar() {
   const { width, isExpand } = useSidebar();
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { roles } = useAuth();
-
-  console.log(roles);
+  const { activeRole } = useAuth();
 
   return (
     <aside>
@@ -27,12 +25,14 @@ export default function Sidebar() {
         style={{ width }}
       >
         <nav className="flex-1 overflow-x-hidden overflow-y-auto">
-          {DASHBOARD_NAVBAR_LINKS.map((item) => {
-            if (!roles?.some((role) => item.roles?.includes(role))) return;
-
+          {DASHBOARD_NAVBAR_LINKS[activeRole!].items.map((item) => {
             let isActive: boolean;
 
-            if (item.path === ROUTES.ROOT || item.path === ROUTES.ADMIN) {
+            if (
+              item.path === ROUTES.ROOT ||
+              item.path === ROUTES.ADMIN ||
+              item.path === ROUTES.INSTRUCTORS
+            ) {
               isActive = item.path === pathname;
             } else {
               isActive = pathname.includes(item.path);

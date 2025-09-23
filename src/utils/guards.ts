@@ -1,10 +1,10 @@
-import { ROLES } from "@/config/roles";
+import { ROLES, type RoleEnum } from "@/config/roles";
 import { ROUTES } from "@/routes/utils";
 
-export function redirectByRole(currentUser: User): string {
-  if (!currentUser || !currentUser.roles) return ROUTES.LOGIN;
+export function redirectByRole(role: RoleEnum): string {
+  if (!role) return ROUTES.LOGIN;
 
-  if (currentUser?.roles?.includes(ROLES.ADMIN)) return ROUTES.ADMIN;
-  else if (currentUser.roles.includes(ROLES.INSTRUCTOR)) return ROUTES.INSTRUCTORS;
+  if (role === ROLES.ADMIN) return ROUTES.ADMIN;
+  else if (role === ROLES.INSTRUCTOR) return ROUTES.INSTRUCTORS;
   else return ROUTES.ROOT;
 }

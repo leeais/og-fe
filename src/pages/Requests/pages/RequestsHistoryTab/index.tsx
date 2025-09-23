@@ -1,3 +1,9 @@
+import TableRequestsHistory from "./components/TableRequestsHistory";
+
 export default function RequestsHistoryTab() {
-  return <div>RequestsHistoryTab</div>;
+  return (
+    <div>
+      <TableRequestsHistory />
+    </div>
+  );
 }

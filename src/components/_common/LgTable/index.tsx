@@ -70,9 +70,10 @@ export default function LgTable<T>({
 
   const actionsColumn: ColumnType<T> = {
     key: "actions",
+    title: "Thao tác",
     dataIndex: "actions",
     fixed: "right",
-    align: "right",
+    align: "center",
     width: 100,
     render: () => (
       <div className="flex gap-1 items-center justify-center">

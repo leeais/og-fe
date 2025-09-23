@@ -18,13 +18,13 @@ type GeneralItemType = {
 
 type GeneralsGroupType = {
   title: string;
-  childrens: GeneralItemType[];
+  children: GeneralItemType[];
 };
 
 export const GENERALS_LIST: GeneralsGroupType[] = [
   {
     title: "Người dùng và phân quyền",
-    childrens: [
+    children: [
       {
         name: "Giáo viên",
         description: "Thêm mới và quản lý giáo viên",
@@ -59,7 +59,7 @@ export const GENERALS_LIST: GeneralsGroupType[] = [
   },
   {
     title: "Thanh toán",
-    childrens: [
+    children: [
       {
         name: "Phương thức thanh toán",
         description: "Thêm mới và quản lý phương thức thanh toán",

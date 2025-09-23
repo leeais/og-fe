@@ -6,7 +6,7 @@ import { type PropsWithChildren } from "react";
 import { Navigate } from "react-router";
 
 type RolesGuardProps = PropsWithChildren & {
-  hasRoles: RoleEnum[];
+  hasRoles: RoleEnum[] | "*";
   showNotFoundPage?: boolean;
   redirectTo?: keyof typeof ROUTES;
 };
@@ -17,18 +17,23 @@ export default function RolesGuard({
   showNotFoundPage = true,
   redirectTo,
 }: RolesGuardProps) {
-  const { currentUser } = useAuth();
+  const { activeRole } = useAuth();
 
-  if (!currentUser || !currentUser.roles) {
+  if (!activeRole) {
     return <Navigate to={ROUTES.LOGIN} replace />;
   }
 
-  const userRoles = currentUser?.roles;
+  if (hasRoles === "*") {
+    console.log("debugger", redirectByRole(activeRole));
+    return <Navigate to={redirectByRole(activeRole)} />;
+  }
 
-  if (!hasRoles.some((role) => userRoles?.includes(role))) {
+  console.log("debugger");
+
+  if (!hasRoles.includes(activeRole)) {
     if (redirectTo) return <Navigate to={redirectTo} />;
     if (showNotFoundPage) return <Navigate to={ROUTES.NOT_FOUND} />;
-    return <Navigate to={redirectByRole(currentUser)} />;
+    return <Navigate to={redirectByRole(activeRole)} />;
   }
 
   return children;

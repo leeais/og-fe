@@ -9,7 +9,7 @@ export default function Login() {
   const [form] = Form.useForm();
   const { setCredentials } = useAuth();
 
-  const mutation = useMutation({
+  const { mutate: login, isPending } = useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
       const user = data.data.data;
@@ -26,7 +26,7 @@ export default function Login() {
   });
 
   function handleSubmit(values: LoginFormValues) {
-    mutation.mutate(values);
+    login(values);
   }
   return (
     <GuestOnlyRoute>
@@ -53,9 +53,9 @@ export default function Login() {
             size="large"
             type="primary"
             htmlType="submit"
-            disabled={mutation.isPending}
+            disabled={isPending}
           >
-            {mutation.isPending ? "Đăng nhập..." : "Đăng nhập"}
+            {isPending ? "Đăng nhập..." : "Đăng nhập"}
           </Button>
         </Form>
       </div>

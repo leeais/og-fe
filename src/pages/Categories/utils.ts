@@ -17,13 +17,13 @@ type CategoryItemType = {
 
 type CategoriesGroupType = {
   title: string;
-  childrens: CategoryItemType[];
+  children: CategoryItemType[];
 };
 
 export const CATEGORIES_LIST: CategoriesGroupType[] = [
   {
     title: "Đơn từ",
-    childrens: [
+    children: [
       {
         name: "Thủ tục hành chính",
         description: "Thêm mới và quản lý thủ tục hành chính",
@@ -34,7 +34,7 @@ export const CATEGORIES_LIST: CategoriesGroupType[] = [
   },
   {
     title: "Phòng ban và bộ phận",
-    childrens: [
+    children: [
       {
         name: "Phòng ban",
         description: "Thêm mới và quản lý phòng ban",

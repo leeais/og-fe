@@ -11,6 +11,7 @@ import {
   faFolderTree,
   faGear,
   faHouse,
+  faSwatchbook,
   faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -20,75 +21,124 @@ export type NavItem = {
   icon: IconDefinition;
   activeIcon: IconDefinition;
   children?: NavItem[];
-  roles?: RoleEnum[];
 };
 
-// const allRoles: RoleEnum[] = [ROLES.ADMIN, ROLES.INSTRUCTOR, ROLES.STUDENT];
-const userRoles: RoleEnum[] = [ROLES.INSTRUCTOR, ROLES.STUDENT];
-
-export const DASHBOARD_NAVBAR_LINKS: NavItem[] = [
+export const DASHBOARD_NAVBAR_LINKS: Record<
+  RoleEnum,
   {
-    label: "Trang chủ",
-    path: ROUTES.ROOT,
-    icon: faHouse,
-    activeIcon: faHouse,
-    roles: [ROLES.STUDENT],
+    role: RoleEnum;
+    items: NavItem[];
+  }
+> = {
+  [ROLES.ADMIN]: {
+    role: ROLES.ADMIN,
+    items: [
+      {
+        label: "Dashboard",
+        path: ROUTES.ADMIN,
+        icon: faChartPie,
+        activeIcon: faChartPie,
+      },
+      {
+        label: "Thủ tục hành chính",
+        path: ROUTES.ADMIN_PROCEDURES,
+        icon: faFolderOpen,
+        activeIcon: faFolderOpen,
+      },
+      {
+        label: "Danh mục",
+        path: ROUTES.ADMIN_CATEGORIES,
+        icon: faFolderTree,
+        activeIcon: faFolderTree,
+      },
+      {
+        label: "Quản lý chung",
+        path: ROUTES.ADMIN_GENERAL,
+        icon: faToolbox,
+        activeIcon: faToolbox,
+      },
+      {
+        label: "Cài đặt",
+        path: ROUTES.SETTINGS,
+        icon: faGear,
+        activeIcon: faGear,
+      },
+    ],
   },
-  {
-    label: "Tạo yêu cầu",
-    path: ROUTES.REQUESTS_ADD,
-    icon: faFileCirclePlus,
-    activeIcon: faFileCirclePlus,
-    roles: userRoles,
+  [ROLES.INSTRUCTOR]: {
+    role: ROLES.INSTRUCTOR,
+    items: [
+      {
+        label: "Dashboard",
+        path: ROUTES.INSTRUCTORS,
+        icon: faChartPie,
+        activeIcon: faChartPie,
+      },
+      {
+        label: "Tạo yêu cầu",
+        path: ROUTES.REQUEST_CREATION,
+        icon: faFileCirclePlus,
+        activeIcon: faFileCirclePlus,
+      },
+      {
+        label: "Quản lý yêu cầu",
+        path: ROUTES.REQUESTS,
+        icon: faCodePullRequest,
+        activeIcon: faCodePullRequest,
+      },
+      {
+        label: "Xử lý yêu cầu",
+        path: ROUTES.INSTRUCTORS_REQUEST_PROCESSING,
+        icon: faSwatchbook,
+        activeIcon: faSwatchbook,
+      },
+      {
+        label: "Quản lý tài liệu",
+        path: ROUTES.DOCUMENTS,
+        icon: faFolder,
+        activeIcon: faFolder,
+      },
+      {
+        label: "Cài đặt",
+        path: ROUTES.SETTINGS,
+        icon: faGear,
+        activeIcon: faGear,
+      },
+    ],
   },
-  {
-    label: "Quản lý yêu cầu",
-    path: ROUTES.REQUESTS,
-    icon: faCodePullRequest,
-    activeIcon: faCodePullRequest,
-    roles: userRoles,
+  [ROLES.STUDENT]: {
+    role: ROLES.STUDENT,
+    items: [
+      {
+        label: "Trang chủ",
+        path: ROUTES.ROOT,
+        icon: faHouse,
+        activeIcon: faHouse,
+      },
+      {
+        label: "Tạo yêu cầu",
+        path: ROUTES.REQUEST_CREATION,
+        icon: faFileCirclePlus,
+        activeIcon: faFileCirclePlus,
+      },
+      {
+        label: "Quản lý yêu cầu",
+        path: ROUTES.REQUESTS,
+        icon: faCodePullRequest,
+        activeIcon: faCodePullRequest,
+      },
+      {
+        label: "Quản lý tài liệu",
+        path: ROUTES.DOCUMENTS,
+        icon: faFolder,
+        activeIcon: faFolder,
+      },
+      {
+        label: "Cài đặt",
+        path: ROUTES.SETTINGS,
+        icon: faGear,
+        activeIcon: faGear,
+      },
+    ],
   },
-  {
-    label: "Quản lý tài liệu",
-    path: ROUTES.DOCUMENTS,
-    icon: faFolder,
-    activeIcon: faFolder,
-    roles: userRoles,
-  },
-  // admin
-  {
-    label: "Dashboard",
-    path: ROUTES.ADMIN,
-    icon: faChartPie,
-    activeIcon: faChartPie,
-    roles: [ROLES.ADMIN],
-  },
-  {
-    label: "Thủ tục hành chính",
-    path: ROUTES.ADMIN_PROCEDURES,
-    icon: faFolderOpen,
-    activeIcon: faFolderOpen,
-    roles: [ROLES.ADMIN],
-  },
-  {
-    label: "Danh mục",
-    path: ROUTES.ADMIN_CATEGORIES,
-    icon: faFolderTree,
-    activeIcon: faFolderTree,
-    roles: [ROLES.ADMIN],
-  },
-  {
-    label: "Quản lý chung",
-    path: ROUTES.ADMIN_GENERAL,
-    icon: faToolbox,
-    activeIcon: faToolbox,
-    roles: [ROLES.ADMIN],
-  },
-  {
-    label: "Cài đặt",
-    path: ROUTES.SETTINGS,
-    icon: faGear,
-    activeIcon: faGear,
-    roles: [ROLES.ADMIN],
-  },
-];
+};

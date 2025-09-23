@@ -4,6 +4,9 @@ class RequestsService {
   getRequests() {
     return api.get("/requests");
   }
+  getRequestsByUser(userId: string) {
+    return api.get(`/users/${userId}/requests`);
+  }
   getRequest(id: string) {
     return api.get(`/requests/${id}`);
   }

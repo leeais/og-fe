@@ -4,10 +4,21 @@ export const useAuth = () => {
   const {
     user: currentUser,
     isAuthenticated: isLoggedIn,
-    setCredentials,
-    logout,
     token,
+    activeRole,
+    setCredentials,
+    switchActiveRole,
+    logout,
   } = useAuthStore();
   const roles = currentUser?.roles;
-  return { currentUser, isLoggedIn, setCredentials, logout, token, roles };
+  return {
+    currentUser,
+    isLoggedIn,
+    token,
+    roles,
+    activeRole,
+    setCredentials,
+    switchActiveRole,
+    logout,
+  };
 };
