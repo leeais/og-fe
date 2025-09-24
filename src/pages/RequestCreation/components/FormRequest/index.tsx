@@ -9,7 +9,7 @@ export default function FormRequest() {
     queryKey: ["departments"],
     queryFn: departmentService.getDepartments,
   });
-  const [files, setFiles] = useState<File[]>([]);
+  const [files] = useState<File[]>([]);
 
   return (
     <Form
