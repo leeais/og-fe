@@ -2,7 +2,6 @@ import { Button, Form, Input } from "antd";
 import { DUMMY_USER, type LoginFormValues } from "./utils";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/auth.service";
-import GuestOnlyRoute from "@/components/GuestOnlyRoute";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Login() {
@@ -29,36 +28,34 @@ export default function Login() {
     login(values);
   }
   return (
-    <GuestOnlyRoute>
-      <div className="size-full h-screen flex items-center justify-center bg-accent">
-        <Form
-          className="bg-background shadow rounded p-8 w-md"
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-          initialValues={{
-            username: "2100878",
-            password: "1111",
-          }}
+    <div className="size-full h-screen flex items-center justify-center bg-accent">
+      <Form
+        className="bg-background shadow rounded p-8 w-md"
+        form={form}
+        layout="vertical"
+        onFinish={handleSubmit}
+        initialValues={{
+          username: "2100878",
+          password: "1111",
+        }}
+      >
+        <h2 className="text-lg font-semibold my-6">Chào mừng trở lại</h2>
+        <Form.Item label="Username" name="username" required>
+          <Input size="large" />
+        </Form.Item>
+        <Form.Item label="Mật khẩu" name="password" required>
+          <Input.Password size="large" />
+        </Form.Item>
+        <Button
+          className="w-full mt-4 disabled:bg-accent disabled:text-accent-foreground"
+          size="large"
+          type="primary"
+          htmlType="submit"
+          disabled={isPending}
         >
-          <h2 className="text-lg font-semibold my-6">Chào mừng trở lại</h2>
-          <Form.Item label="Username" name="username" required>
-            <Input size="large" />
-          </Form.Item>
-          <Form.Item label="Mật khẩu" name="password" required>
-            <Input.Password size="large" />
-          </Form.Item>
-          <Button
-            className="w-full mt-4 disabled:bg-accent disabled:text-accent-foreground"
-            size="large"
-            type="primary"
-            htmlType="submit"
-            disabled={isPending}
-          >
-            {isPending ? "Đăng nhập..." : "Đăng nhập"}
-          </Button>
-        </Form>
-      </div>
-    </GuestOnlyRoute>
+          {isPending ? "Đăng nhập..." : "Đăng nhập"}
+        </Button>
+      </Form>
+    </div>
   );
 }

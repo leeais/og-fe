@@ -1,12 +1,16 @@
-import { useAuth } from '@/hooks/useAuth';
-import { redirectByRole } from '@/utils/guards';
-import type { PropsWithChildren } from 'react';
-import { Navigate } from 'react-router';
+import { useAuth } from "@/hooks/useAuth";
+import { redirectByRole } from "@/utils/guards";
+import type { PropsWithChildren } from "react";
+import { Navigate } from "react-router";
 
 type GuestOnlyRouteProps = PropsWithChildren & {};
 
 export default function GuestOnlyRoute({ children }: GuestOnlyRouteProps) {
-  const { isLoggedIn, currentUser } = useAuth();
+  const { isLoggedIn, activeRole } = useAuth();
 
-  return isLoggedIn && currentUser ? <Navigate to={redirectByRole(currentUser)} /> : children;
+  return isLoggedIn && activeRole ? (
+    <Navigate to={redirectByRole(activeRole)} />
+  ) : (
+    children
+  );
 }

@@ -14,6 +14,7 @@ export default function Header() {
     label: rolesMappingName[value],
     value: value,
   }));
+
   return (
     <header className="relative">
       <div className="h-12 w-full" />
@@ -25,7 +26,6 @@ export default function Header() {
             defaultValue={activeRole}
             options={rolesOptions}
             onChange={switchActiveRole}
-            disabled={rolesOptions?.length === 1}
             suffixIcon={
               <FontAwesomeIcon
                 className="text-primary"

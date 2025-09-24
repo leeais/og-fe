@@ -56,7 +56,7 @@ export default function PopoverAvatar() {
         icon={<FontAwesomeIcon icon={faUserPen} />}
         color="default"
         variant="link"
-        onClick={() => navigate(ROUTES.PROFILE)}
+        onClick={() => navigate(ROUTES.SETTINGS_PROFILE)}
       >
         Thông tin tài khoản
       </Button>

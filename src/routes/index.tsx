@@ -1,161 +1,188 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
-
-import { ROUTES } from "@/routes/utils";
 import { lazy, Suspense } from "react";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
+import { ROUTES } from "@/routes/utils";
 import { ROLES } from "@/config/roles";
-import Home from "@/pages/Home";
-import useAuthStore from "@/store/auth.store";
 
-// common
 const SplashScreen = lazy(() => import("@/pages/SplashScreen"));
 const Login = lazy(() => import("@/pages/Login"));
 const RolesGuard = lazy(() => import("@/components/RolesGuard"));
+const GuestOnlyRoute = lazy(() => import("@/components/GuestOnlyRoute"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const Forbidden = lazy(() => import("@/pages/Forbidden"));
 const DashboardLayout = lazy(
   () => import("@/components/_layout/DashboardLayout")
 );
 
+const Home = lazy(() => import("@/pages/Home"));
 const RequestCreation = lazy(() => import("@/pages/RequestCreation"));
 const Requests = lazy(() => import("@/pages/Requests"));
-const RequestProcessing = lazy(() => import("@/pages/RequestProcessing"));
-
 const Documents = lazy(() => import("@/pages/Documents"));
-
+const Settings = lazy(() => import("@/pages/Settings"));
 const SettingsProfile = lazy(() => import("@/pages/SettingsProfile"));
 
-const Settings = lazy(() => import("@/pages/Settings"));
+// instructors
+const RequestProcessing = lazy(() => import("@/pages/RequestProcessing"));
 
 // admin
 const Procedures = lazy(() => import("@/pages/Procedures"));
-
 const Categories = lazy(() => import("@/pages/Categories"));
 const CategoriesProcedures = lazy(() => import("@/pages/CategoriesProcedures"));
 const CategoriesDepartments = lazy(
   () => import("@/pages/CategoriesDepartment")
 );
 const CategoriesFaculties = lazy(() => import("@/pages/CategoriesFaculties"));
-
 const General = lazy(() => import("@/pages/General"));
 const GeneralInstructors = lazy(() => import("@/pages/GeneralInstructors"));
 const GeneralStudents = lazy(() => import("@/pages/GeneralStudents"));
 const GeneralAccounts = lazy(() => import("@/pages/GeneralAccounts"));
 const GeneralRoles = lazy(() => import("@/pages/GeneralRoles"));
 
-const activeRole = useAuthStore.getState().activeRole;
-
 const router = createBrowserRouter([
+  // have layout
   {
     path: ROUTES.ROOT,
-    element: <DashboardLayout />,
+    element: (
+      <RolesGuard hasRoles="*">
+        <DashboardLayout />
+      </RolesGuard>
+    ),
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <RolesGuard hasRoles={[ROLES.STUDENT]}>
+            <Home />
+          </RolesGuard>
+        ),
       },
       {
         path: ROUTES.REQUEST_CREATION,
-        element: <RequestCreation />,
+        element: (
+          <RolesGuard hasRoles={[ROLES.STUDENT, ROLES.INSTRUCTOR]}>
+            <RequestCreation />
+          </RolesGuard>
+        ),
       },
       {
         path: ROUTES.REQUESTS,
-        element: <Requests />,
+        element: (
+          <RolesGuard hasRoles={[ROLES.STUDENT, ROLES.INSTRUCTOR]}>
+            <Requests />
+          </RolesGuard>
+        ),
       },
       {
         path: ROUTES.DOCUMENTS,
-        element: <Documents />,
+        element: (
+          <RolesGuard hasRoles={[ROLES.STUDENT, ROLES.INSTRUCTOR]}>
+            <Documents />
+          </RolesGuard>
+        ),
       },
       {
         path: ROUTES.SETTINGS,
-        element: <Settings />,
+        element: (
+          <RolesGuard hasRoles={[ROLES.STUDENT, ROLES.INSTRUCTOR, ROLES.ADMIN]}>
+            <Settings />
+          </RolesGuard>
+        ),
       },
       {
         path: ROUTES.SETTINGS_PROFILE,
-        element: <SettingsProfile />,
+        element: (
+          <RolesGuard hasRoles={[ROLES.STUDENT, ROLES.INSTRUCTOR, ROLES.ADMIN]}>
+            <SettingsProfile />
+          </RolesGuard>
+        ),
       },
-      // instructor
-      activeRole === ROLES.INSTRUCTOR
-        ? {
-            path: ROUTES.INSTRUCTORS,
-            element: (
-              <RolesGuard hasRoles={[ROLES.INSTRUCTOR]}>
-                <Outlet />
-              </RolesGuard>
-            ),
-            children: [
-              {
-                index: true,
-                element: <>Instructor dashboard</>,
-              },
-              {
-                path: ROUTES.INSTRUCTORS_REQUEST_PROCESSING,
-                element: <RequestProcessing />,
-              },
-            ],
-          }
-        : {},
+      // instructors
+      {
+        path: ROUTES.INSTRUCTORS,
+        element: (
+          <RolesGuard hasRoles={[ROLES.INSTRUCTOR]}>
+            <Outlet />
+          </RolesGuard>
+        ),
+        children: [
+          {
+            index: true,
+            element: <>Instructor Dashboard</>,
+          },
+          {
+            path: ROUTES.INSTRUCTORS_REQUEST_PROCESSING,
+            element: <RequestProcessing />,
+          },
+        ],
+      },
       // admin
-      activeRole === ROLES.ADMIN
-        ? {
-            path: ROUTES.ADMIN,
-            element: (
-              <RolesGuard hasRoles={[ROLES.ADMIN]}>
-                <Outlet />
-              </RolesGuard>
-            ),
-            children: [
-              {
-                index: true,
-                element: <div>Dashboard</div>,
-              },
-              {
-                path: ROUTES.ADMIN_PROCEDURES,
-                element: <Procedures />,
-              },
-              {
-                path: ROUTES.ADMIN_CATEGORIES,
-                element: <Categories />,
-              },
-              {
-                path: ROUTES.ADMIN_CATEGORIES_PROCEDURES,
-                element: <CategoriesProcedures />,
-              },
-              {
-                path: ROUTES.ADMIN_CATEGORIES_DEPARTMENTS,
-                element: <CategoriesDepartments />,
-              },
-              {
-                path: ROUTES.ADMIN_CATEGORIES_FACULTIES,
-                element: <CategoriesFaculties />,
-              },
-              {
-                path: ROUTES.ADMIN_GENERAL,
-                element: <General />,
-              },
-              {
-                path: ROUTES.ADMIN_GENERAL_INSTRUCTORS,
-                element: <GeneralInstructors />,
-              },
-              {
-                path: ROUTES.ADMIN_GENERAL_STUDENTS,
-                element: <GeneralStudents />,
-              },
-              {
-                path: ROUTES.ADMIN_GENERAL_ACCOUNTS,
-                element: <GeneralAccounts />,
-              },
-              {
-                path: ROUTES.ADMIN_GENERAL_ROLES,
-                element: <GeneralRoles />,
-              },
-            ],
-          }
-        : {},
+      {
+        path: ROUTES.ADMIN,
+        element: (
+          <RolesGuard hasRoles={[ROLES.ADMIN]}>
+            <Outlet />
+          </RolesGuard>
+        ),
+        children: [
+          {
+            index: true,
+            element: <>Admin Dashboard</>,
+          },
+          {
+            path: ROUTES.ADMIN_PROCEDURES,
+            element: <Procedures />,
+          },
+          {
+            path: ROUTES.ADMIN_CATEGORIES,
+            element: <Categories />,
+          },
+          {
+            path: ROUTES.ADMIN_CATEGORIES_DEPARTMENTS,
+            element: <CategoriesDepartments />,
+          },
+          {
+            path: ROUTES.ADMIN_CATEGORIES_FACULTIES,
+            element: <CategoriesFaculties />,
+          },
+          {
+            path: ROUTES.ADMIN_CATEGORIES_PROCEDURES,
+            element: <CategoriesProcedures />,
+          },
+          {
+            path: ROUTES.ADMIN_GENERAL,
+            element: <General />,
+          },
+          {
+            path: ROUTES.ADMIN_GENERAL_ACCOUNTS,
+            element: <GeneralAccounts />,
+          },
+          {
+            path: ROUTES.ADMIN_GENERAL_INSTRUCTORS,
+            element: <GeneralInstructors />,
+          },
+          {
+            path: ROUTES.ADMIN_GENERAL_ROLES,
+            element: <GeneralRoles />,
+          },
+          {
+            path: ROUTES.ADMIN_GENERAL_STUDENTS,
+            element: <GeneralStudents />,
+          },
+        ],
+      },
     ],
   },
   // without layout
   {
     path: ROUTES.LOGIN,
-    element: <Login />,
+    element: (
+      <GuestOnlyRoute>
+        <Login />
+      </GuestOnlyRoute>
+    ),
+  },
+  {
+    path: ROUTES.FORBIDDEN,
+    element: <Forbidden />,
   },
   {
     path: ROUTES.CATCH_ALL,

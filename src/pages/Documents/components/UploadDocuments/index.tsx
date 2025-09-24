@@ -23,7 +23,11 @@ export default function UploadDocuments() {
         }}
         listType="text"
       >
-        <FontAwesomeIcon icon={faFileUpload} size="3x" color="green" />
+        <FontAwesomeIcon
+          className="text-primary"
+          icon={faFileUpload}
+          size="3x"
+        />
         <p className="text-base my-1">
           Click hoặc kéo tệp vào khu vực này để tải lên
         </p>
