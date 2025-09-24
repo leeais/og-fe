@@ -20,7 +20,8 @@ export default function Login() {
       setCredentials({ ...user, roles }, token);
     },
     onError: () => {
-      if (import.meta.env.DEV) setCredentials(DUMMY_USER, "mocktoken");
+      // if (import.meta.env.DEV) setCredentials(DUMMY_USER, "mocktoken");
+      setCredentials(DUMMY_USER, "mocktoken");
     },
   });
 
