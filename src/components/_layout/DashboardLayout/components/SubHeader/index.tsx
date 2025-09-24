@@ -17,7 +17,7 @@ export default function SubHeader() {
   const { toggleSidebar, isExpand } = useSidebar();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { roles } = useAuth();
+  const { activeRole } = useAuth();
 
   const pathSnippets = pathname.split("/").filter(Boolean);
   const breadcrumbList = pathSnippets.map((_, index) => {
@@ -40,7 +40,7 @@ export default function SubHeader() {
     };
   });
 
-  if (roles?.includes(ROLES.STUDENT))
+  if (activeRole === ROLES.STUDENT)
     breadcrumbList.unshift({
       title: (
         <span
