@@ -1,9 +1,12 @@
+import type { Faculty } from "@/pages/CategoriesFaculties/components/TableFaculties/utils";
+import type { Department } from "@/pages/Documents/components/TableDocuments/utils";
+
 export type Procedure = {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  department: string;
-  faculty: string;
+  department: Department;
+  faculty: Faculty;
   fee: number;
   estimatedTime: number;
   createdAt: string;

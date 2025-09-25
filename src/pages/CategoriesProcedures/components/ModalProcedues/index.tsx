@@ -1,13 +1,15 @@
 import LgModal from "@/components/_common/LgModal";
-import { Form, Input, Select } from "antd";
+import { Form, Input, message, Select } from "antd";
 import type { ProcedureFormData } from "./utils";
 import { useModal } from "@/hooks/useModal";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { procedureService } from "@/services/procedure.service";
 import { departmentService } from "@/services/department.service";
 import type { Department } from "@/pages/CategoriesDepartment/components/TableDepartments/utils";
 import { facultyService } from "@/services/faculty.service";
 import type { Faculty } from "@/pages/CategoriesFaculties/components/TableFaculties/utils";
+import { useEffect } from "react";
+import type { Procedure } from "../TableProcedures/utils";
 
 interface ModalProceduresProps {
   name: string;
@@ -16,25 +18,52 @@ interface ModalProceduresProps {
 export default function ModalProcedures({ name }: ModalProceduresProps) {
   const { closeModal } = useModal();
   const [form] = Form.useForm();
+  const { getData } = useModal();
+  const queryClient = useQueryClient();
+  const { active } = useModal();
 
-  const mutation = useMutation({
-    mutationFn: procedureService.createProcedure,
-    onSuccess: () => {
-      closeModal();
-      form.resetFields();
-    },
-  });
+  const procedure = getData() as Procedure;
+
   const { data: departments } = useQuery({
     queryKey: ["departments"],
     queryFn: departmentService.getDepartments,
   });
+
   const { data: faculties } = useQuery({
     queryKey: ["faculties"],
     queryFn: facultyService.getFaculties,
   });
 
+  const { mutate } = useMutation({
+    mutationFn: (data: ProcedureFormData) => {
+      if (procedure) {
+        return procedureService.updateProcedure(procedure.id, data);
+      }
+      return procedureService.createProcedure(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["procedures"],
+      });
+      form.resetFields();
+      closeModal();
+      message.success(
+        procedure ? "Cập nhật thành công" : "Thêm mới thành công"
+      );
+    },
+  });
+
+  useEffect(() => {
+    if (procedure && active === name)
+      form.setFieldsValue({
+        ...procedure,
+        departmentId: procedure.department?.id,
+        facultyId: procedure.faculty?.id,
+      });
+  }, [form, procedure, active, name]);
+
   function handleSubmit(values: ProcedureFormData) {
-    mutation.mutate(values);
+    mutate(values);
   }
   return (
     <LgModal
@@ -96,6 +125,7 @@ export default function ModalProcedures({ name }: ModalProceduresProps) {
             className="flex-1 m-0"
             name="estimatedTime"
             label="Số ngày xử lý ước tính"
+            required
           >
             <Input className="text-right" type="number" />
           </Form.Item>

@@ -22,10 +22,12 @@
     @apply bg-accent text-accent-foreground py-2 font-semibold;
   }
   /* input */
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     @apply font-normal;
   }
-  input {
+  input,
+  textarea {
     @apply font-normal;
   }
   /* label */

@@ -18,7 +18,10 @@ export default function App() {
         <ConfigProvider locale={viVN}>
           <QueryClientProvider client={queryClient}>
             <AppRouter />
-            <ReactQueryDevtools initialIsOpen={false} />
+            <ReactQueryDevtools
+              initialIsOpen={false}
+              buttonPosition="bottom-left"
+            />
           </QueryClientProvider>
         </ConfigProvider>
       </StyleProvider>
