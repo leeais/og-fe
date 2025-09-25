@@ -1,4 +1,4 @@
-import type { FacultyFormValues } from "@/pages/CategoriesFaculties/components/ModalFaculty/utils";
+import type { FacultyFormData } from "@/pages/CategoriesFaculties/components/ModalFaculty/utils";
 import api from "./api.service";
 
 class FacultyService {
@@ -8,10 +8,10 @@ class FacultyService {
   getFaculty(id: number) {
     return api.get(`/faculties/${id}`);
   }
-  createFaculty(data: FacultyFormValues) {
+  createFaculty(data: FacultyFormData) {
     return api.post("/faculties", data);
   }
-  updateFaculty(id: number, data: Partial<FacultyFormValues>) {
+  updateFaculty(id: number, data: Partial<FacultyFormData>) {
     return api.put(`/faculties/${id}`, data);
   }
   deleteFaculty(id: number) {

@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import { DUMMY_USER, type LoginFormValues } from "./utils";
+import { DUMMY_USER, type LoginFormData } from "./utils";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/auth.service";
 import { useAuth } from "@/hooks/useAuth";
@@ -25,7 +25,7 @@ export default function Login() {
     },
   });
 
-  function handleSubmit(values: LoginFormValues) {
+  function handleSubmit(values: LoginFormData) {
     login(values);
   }
   return (

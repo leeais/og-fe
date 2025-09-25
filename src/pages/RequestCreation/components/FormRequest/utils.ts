@@ -9,4 +9,4 @@ export const requestFormSchema = z.object({
   notes: z.string().optional(),
 });
 
-export type RequestFormValues = z.infer<typeof requestFormSchema>;
+export type RequestFormData = z.infer<typeof requestFormSchema>;

@@ -1,6 +1,6 @@
 import LgModal from "@/components/_common/LgModal";
 import { Form, Input, Select } from "antd";
-import type { StudentFormValues } from "./utils";
+import type { StudentFormData } from "./utils";
 import { useModal } from "@/hooks/useModal";
 
 interface ModalStudentProps {
@@ -11,7 +11,7 @@ export default function ModalStudent({ name }: ModalStudentProps) {
   const { closeModal } = useModal();
   const [form] = Form.useForm();
 
-  function handleSubmit(values: StudentFormValues) {
+  function handleSubmit(values: StudentFormData) {
     try {
       console.log(values);
       form.resetFields();
@@ -21,8 +21,18 @@ export default function ModalStudent({ name }: ModalStudentProps) {
     }
   }
   return (
-    <LgModal name={name} width={600} afterClose={() => form.resetFields()} onOk={() => form.submit()} >
-      <Form className="space-y-2" onFinish={handleSubmit} form={form} layout="vertical">
+    <LgModal
+      name={name}
+      width={600}
+      afterClose={() => form.resetFields()}
+      onOk={() => form.submit()}
+    >
+      <Form
+        className="space-y-2"
+        onFinish={handleSubmit}
+        form={form}
+        layout="vertical"
+      >
         <Form.Item label="Tên thủ tục" name="name" required>
           <Input />
         </Form.Item>

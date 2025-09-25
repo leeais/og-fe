@@ -1,5 +1,5 @@
 import api from "./api.service";
-import type { StudentFormValues } from "@/pages/GeneralStudents/components/ModalStudent/utils";
+import type { StudentFormData } from "@/pages/GeneralStudents/components/ModalStudent/utils";
 
 class StudentService {
   getStudents() {
@@ -8,10 +8,10 @@ class StudentService {
   getStudentById(id: string) {
     return api.get(`/class-students/${id}`);
   }
-  createStudent(data: StudentFormValues) {
+  createStudent(data: StudentFormData) {
     return api.post("/class-students", data);
   }
-  updateStudent(id: string, data: Partial<StudentFormValues>) {
+  updateStudent(id: string, data: Partial<StudentFormData>) {
     return api.put(`/class-students/${id}`, data);
   }
   deleteStudent(id: string) {

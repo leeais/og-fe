@@ -1,6 +1,6 @@
 import LgModal from "@/components/_common/LgModal";
 import { Form, Image, Input, message } from "antd";
-import type { FacultyFormValues } from "./utils";
+import type { FacultyFormData } from "./utils";
 import { useModal } from "@/hooks/useModal";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ interface ModalFacultyProps {
 
 export default function ModalFaculty({ name }: ModalFacultyProps) {
   const { closeModal, getData } = useModal();
-  const [form] = Form.useForm<FacultyFormValues>();
+  const [form] = Form.useForm<FacultyFormData>();
   const [avatar, setAvatar] = useState<File>();
   const queryClient = useQueryClient();
   const { active } = useModal();
@@ -21,7 +21,7 @@ export default function ModalFaculty({ name }: ModalFacultyProps) {
   const faculty = getData() as Faculty;
 
   const { mutate } = useMutation({
-    mutationFn: (data: FacultyFormValues) => {
+    mutationFn: (data: FacultyFormData) => {
       if (faculty) {
         return facultyService.updateFaculty(faculty.id, data);
       }
@@ -29,7 +29,7 @@ export default function ModalFaculty({ name }: ModalFacultyProps) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["facultys"],
+        queryKey: ["faculties"],
       });
       form.resetFields();
       setAvatar(undefined);
@@ -42,7 +42,7 @@ export default function ModalFaculty({ name }: ModalFacultyProps) {
     if (faculty && active === name) form.setFieldsValue(faculty);
   }, [form, faculty, active, name]);
 
-  function handleSubmit(values: FacultyFormValues) {
+  function handleSubmit(values: FacultyFormData) {
     mutate(values);
   }
   return (

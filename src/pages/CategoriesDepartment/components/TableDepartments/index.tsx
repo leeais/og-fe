@@ -9,10 +9,13 @@ import { message } from "antd";
 
 export default function TableDepartments() {
   const queryClient = useQueryClient();
+  const { openModal } = useModal();
+
   const { data, isPending } = useQuery({
     queryKey: ["departments"],
     queryFn: departmentService.getDepartments,
   });
+
   const { mutate } = useMutation({
     mutationFn: departmentService.deleteDepartment,
     onSuccess() {
@@ -22,7 +25,6 @@ export default function TableDepartments() {
       message.success("Xóa thành công");
     },
   });
-  const { openModal } = useModal();
 
   return (
     <LgTable<Department>

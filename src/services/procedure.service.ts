@@ -1,4 +1,4 @@
-import type { ProcedureFormValues } from "@/pages/CategoriesProcedures/components/ModalProcedues/utils";
+import type { ProcedureFormData } from "@/pages/CategoriesProcedures/components/ModalProcedues/utils";
 import api from "./api.service";
 
 class ProcedureService {
@@ -8,10 +8,10 @@ class ProcedureService {
   getProcedureById(id: string) {
     return api.get(`/request-types/${id}`);
   }
-  createProcedure(data: ProcedureFormValues) {
+  createProcedure(data: ProcedureFormData) {
     return api.post("/request-types", data);
   }
-  updateProcedure(id: string, data: Partial<ProcedureFormValues>) {
+  updateProcedure(id: string, data: Partial<ProcedureFormData>) {
     return api.put(`/request-types/${id}`, data);
   }
   deleteProcedure(id: string) {

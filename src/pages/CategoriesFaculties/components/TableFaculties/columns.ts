@@ -1,5 +1,6 @@
 import type { ColumnType } from "antd/es/table";
 import type { Faculty } from "./utils";
+import { formatDate } from "@/utils/date";
 
 export const columns: ColumnType<Faculty>[] = [
   {
@@ -32,11 +33,13 @@ export const columns: ColumnType<Faculty>[] = [
     title: "Ngày tạo",
     dataIndex: "createdAt",
     width: 200,
+    render: (value: Date) => formatDate(value),
   },
   {
     key: "updatedAt",
     title: "Ngày cập nhật",
     dataIndex: "updatedAt",
     width: 200,
+    render: (value: Date) => formatDate(value),
   },
 ];

@@ -4,20 +4,20 @@ import { ROLES, type RoleEnum } from "@/config/roles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import type { ProfileFormValues } from "./utils";
+import type { ProfileFormData } from "./utils";
 import { useMutation } from "@tanstack/react-query";
 
 export default function SettingsProfile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const { mutate: updateProfile, isPending } = useMutation({
     mutationKey: ["update-profile"],
-    mutationFn: async (values: ProfileFormValues) => Promise.resolve(values),
+    mutationFn: async (values: ProfileFormData) => Promise.resolve(values),
   });
   // fetch user data from server, don't use data state
   const { currentUser, roles } = useAuth();
   const [form] = Form.useForm();
 
-  const handleUpdateProfile = (values: ProfileFormValues) => {
+  const handleUpdateProfile = (values: ProfileFormData) => {
     if (!isEdit) return;
     updateProfile(values);
   };

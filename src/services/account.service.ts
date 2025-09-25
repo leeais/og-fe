@@ -1,5 +1,5 @@
 import api from "./api.service";
-import type { AccountFormValues } from "@/pages/GeneralAccounts/components/ModalAccount/utils";
+import type { AccountFormData } from "@/pages/GeneralAccounts/components/ModalAccount/utils";
 
 class AccountService {
   getAccounts() {
@@ -8,10 +8,10 @@ class AccountService {
   getAccountById(id: string) {
     return api.get(`/accounts/${id}`);
   }
-  createAccount(data: AccountFormValues) {
+  createAccount(data: AccountFormData) {
     return api.post("/accounts", data);
   }
-  updateAccount(id: string, data: Partial<AccountFormValues>) {
+  updateAccount(id: string, data: Partial<AccountFormData>) {
     return api.put(`/accounts/${id}`, data);
   }
   deleteAccount(id: string) {

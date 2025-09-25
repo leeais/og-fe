@@ -6,7 +6,7 @@ export const loginFormSchema = z.object({
   password: z.string().min(1),
 });
 
-export type LoginFormValues = z.infer<typeof loginFormSchema>;
+export type LoginFormData = z.infer<typeof loginFormSchema>;
 
 export const DUMMY_USER: User = {
   id: "1",

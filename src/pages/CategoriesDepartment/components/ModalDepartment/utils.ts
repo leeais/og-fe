@@ -7,4 +7,4 @@ export const departmentFormSchema = z.object({
   bio: z.string().optional(),
 });
 
-export type DepartmentFormValues = z.infer<typeof departmentFormSchema>;
+export type DepartmentFormData = z.infer<typeof departmentFormSchema>;

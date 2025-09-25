@@ -9,4 +9,4 @@ export const profileFormSchema = z.object({
   bio: z.string().optional(),
 });
 
-export type ProfileFormValues = z.infer<typeof profileFormSchema>;
+export type ProfileFormData = z.infer<typeof profileFormSchema>;

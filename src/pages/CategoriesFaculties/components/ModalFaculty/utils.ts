@@ -7,4 +7,4 @@ export const facultyFormSchema = z.object({
   bio: z.string().optional(),
 });
 
-export type FacultyFormValues = z.infer<typeof facultyFormSchema>;
+export type FacultyFormData = z.infer<typeof facultyFormSchema>;

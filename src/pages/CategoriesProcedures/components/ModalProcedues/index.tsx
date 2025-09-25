@@ -1,6 +1,6 @@
 import LgModal from "@/components/_common/LgModal";
 import { Form, Input, Select } from "antd";
-import type { ProcedureFormValues } from "./utils";
+import type { ProcedureFormData } from "./utils";
 import { useModal } from "@/hooks/useModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { procedureService } from "@/services/procedure.service";
@@ -33,7 +33,7 @@ export default function ModalProcedures({ name }: ModalProceduresProps) {
     queryFn: facultyService.getFaculties,
   });
 
-  function handleSubmit(values: ProcedureFormValues) {
+  function handleSubmit(values: ProcedureFormData) {
     mutation.mutate(values);
   }
   return (

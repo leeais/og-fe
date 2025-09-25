@@ -13,7 +13,9 @@ export default function CategoriesFaculties() {
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-base">Bảng dữ liệu</h2>
         <div className="space-x-2">
-          <Button type="primary" onClick={() => openModal(FACULTY_MODAL_NAME)}>Thêm mới</Button>
+          <Button type="primary" onClick={() => openModal(FACULTY_MODAL_NAME)}>
+            Thêm mới
+          </Button>
           <Button icon={<FontAwesomeIcon icon={faFilter} />} />
           <Button icon={<FontAwesomeIcon icon={faEllipsis} />} />
         </div>

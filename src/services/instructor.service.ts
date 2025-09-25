@@ -1,5 +1,5 @@
 import api from "./api.service";
-import type { InstructorFormValues } from "@/pages/GeneralInstructors/components/ModalInstructor/utils";
+import type { InstructorFormData } from "@/pages/GeneralInstructors/components/ModalInstructor/utils";
 
 class InstructorService {
   getInstructors() {
@@ -8,10 +8,10 @@ class InstructorService {
   getInstructorById(id: string) {
     return api.get(`/class-instructors/${id}`);
   }
-  createInstructor(data: InstructorFormValues) {
+  createInstructor(data: InstructorFormData) {
     return api.post("/class-instructors", data);
   }
-  updateInstructor(id: string, data: Partial<InstructorFormValues>) {
+  updateInstructor(id: string, data: Partial<InstructorFormData>) {
     return api.put(`/class-instructors/${id}`, data);
   }
   deleteInstructor(id: string) {

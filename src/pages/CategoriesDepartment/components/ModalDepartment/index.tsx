@@ -1,6 +1,6 @@
 import LgModal from "@/components/_common/LgModal";
 import { Form, Image, Input, message } from "antd";
-import type { DepartmentFormValues } from "./utils";
+import type { DepartmentFormData } from "./utils";
 import { useModal } from "@/hooks/useModal";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ interface ModalDepartmentProps {
 
 export default function ModalDepartment({ name }: ModalDepartmentProps) {
   const { closeModal, getData } = useModal();
-  const [form] = Form.useForm<DepartmentFormValues>();
+  const [form] = Form.useForm<DepartmentFormData>();
   const [avatar, setAvatar] = useState<File>();
   const queryClient = useQueryClient();
   const { active } = useModal();
@@ -21,7 +21,7 @@ export default function ModalDepartment({ name }: ModalDepartmentProps) {
   const department = getData() as Department;
 
   const { mutate } = useMutation({
-    mutationFn: (data: DepartmentFormValues) => {
+    mutationFn: (data: DepartmentFormData) => {
       if (department) {
         return departmentService.updateDepartment(department.id, data);
       }
@@ -44,7 +44,7 @@ export default function ModalDepartment({ name }: ModalDepartmentProps) {
     if (department && active === name) form.setFieldsValue(department);
   }, [form, department, active, name]);
 
-  function handleSubmit(values: DepartmentFormValues) {
+  function handleSubmit(values: DepartmentFormData) {
     mutate(values);
   }
   return (

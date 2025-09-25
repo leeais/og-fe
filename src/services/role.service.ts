@@ -1,5 +1,5 @@
 // import api from "./api.service";
-// import type { RoleFormValues } from "@/pages/GeneralRoles/components/ModalRole/utils";
+// import type { RoleFormData } from "@/pages/GeneralRoles/components/ModalRole/utils";
 
 // class RoleService {
 //   getRoles() {
@@ -8,10 +8,10 @@
 //   getRoleById(id: string) {
 //     return api.get(`/roles/${id}`);
 //   }
-//   createRole(data: RoleFormValues) {
+//   createRole(data: RoleFormData) {
 //     return api.post("/roles", data);
 //   }
-//   updateRole(id: string, data: Partial<RoleFormValues>) {
+//   updateRole(id: string, data: Partial<RoleFormData>) {
 //     return api.put(`/roles/${id}`, data);
 //   }
 //   deleteRole(id: string) {
