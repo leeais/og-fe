@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import type { ColumnType } from "antd/es/table";
 import { useState, type Key } from "react";
+import LgModal from "../LgModal";
+import { useModal } from "@/hooks/useModal";
+import { CONFIRM_DELETE_MODAL_NAME } from "./utils";
 
 interface LgTableProps<T>
   extends Omit<
@@ -21,6 +24,11 @@ interface LgTableProps<T>
     onSelectedRowsChange?: (keys: Key[], rows: T[]) => void;
   };
   isLoading?: boolean;
+  rowActions?: {
+    onEdit?: (record: T) => void;
+    onDelete?: (record: T) => void;
+    onMore?: (record: T) => void;
+  };
 }
 
 export default function LgTable<T>({
@@ -30,10 +38,12 @@ export default function LgTable<T>({
   dataSource,
   rowSelection,
   isLoading,
+  rowActions,
   ...props
 }: LgTableProps<T>) {
   const [internalKeys, setInternalKeys] = useState<Key[]>([]);
   const selectedRowKeys = rowSelection?.selectedRowKeys ?? internalKeys;
+  const { openModal, getData, closeModal, stackModals } = useModal();
 
   const handleChange = (keys: Key[], rows: T[]) => {
     if (rowSelection?.onSelectedRowKeysChange) {
@@ -75,24 +85,34 @@ export default function LgTable<T>({
     fixed: "right",
     align: "center",
     width: 100,
-    render: () => (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    render: (_: any, record: T) => (
       <div className="flex gap-1 items-center justify-center">
-        <Button
-          size="small"
-          type="text"
-          icon={<FontAwesomeIcon icon={faEdit} />}
-        />
-        <Button
-          danger
-          size="small"
-          type="text"
-          icon={<FontAwesomeIcon icon={faTrash} />}
-        />
-        <Button
-          size="small"
-          type="text"
-          icon={<FontAwesomeIcon icon={faEllipsis} />}
-        />
+        {rowActions?.onEdit && (
+          <Button
+            size="small"
+            type="text"
+            icon={<FontAwesomeIcon icon={faEdit} />}
+            onClick={() => rowActions.onEdit?.(record)}
+          />
+        )}
+        {rowActions?.onDelete && (
+          <Button
+            danger
+            size="small"
+            type="text"
+            icon={<FontAwesomeIcon icon={faTrash} />}
+            onClick={() => openModal(CONFIRM_DELETE_MODAL_NAME, record)}
+          />
+        )}
+        {rowActions?.onMore && (
+          <Button
+            size="small"
+            type="text"
+            icon={<FontAwesomeIcon icon={faEllipsis} />}
+            onClick={() => rowActions.onMore?.(record)}
+          />
+        )}
       </div>
     ),
   };
@@ -115,6 +135,32 @@ export default function LgTable<T>({
         }}
         {...props}
       />
+
+      <LgModal
+        className="top-1/5"
+        name={CONFIRM_DELETE_MODAL_NAME}
+        title="Xóa"
+        footer={
+          <div className="flex items-center justify-end gap-2">
+            <Button onClick={() => closeModal(CONFIRM_DELETE_MODAL_NAME)}>
+              Hủy
+            </Button>
+            <Button
+              type="primary"
+              danger
+              onClick={() => {
+                rowActions?.onDelete?.(getData(CONFIRM_DELETE_MODAL_NAME) as T);
+                closeModal(CONFIRM_DELETE_MODAL_NAME);
+                console.log(stackModals);
+              }}
+            >
+              Xóa
+            </Button>
+          </div>
+        }
+      >
+        <p>Hành động này nguy hiểm và không thể khôi phục. Bạn vẫn muốn xóa!</p>
+      </LgModal>
     </div>
   );
 }

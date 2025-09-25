@@ -5,16 +5,16 @@ class DepartmentsService {
   getDepartments() {
     return api.get("/departments");
   }
-  getDepartment(id: string) {
+  getDepartment(id: number) {
     return api.get(`/departments/${id}`);
   }
   createDepartment(data: DepartmentFormValues) {
     return api.post("/departments", data);
   }
-  updateDepartment(id: string, data: Partial<DepartmentFormValues>) {
+  updateDepartment(id: number, data: Partial<DepartmentFormValues>) {
     return api.put(`/departments/${id}`, data);
   }
-  deleteDepartment(id: string) {
+  deleteDepartment(id: number) {
     return api.delete(`/departments/${id}`);
   }
 }

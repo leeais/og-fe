@@ -41,15 +41,13 @@ export default function LgModal({
 
   const header = (
     <div className="flex itesms-center justify-between">
-      <span className="font-semibold text-primary-foreground">
-        {modalTitle}
-      </span>
+      <span className="font-semibold text-accent-foreground">{modalTitle}</span>
       {closeIcon && (
         <Button
-          className="text-primary-foreground"
+          className="text-accent-foreground"
           type="text"
           size="small"
-          icon={<FontAwesomeIcon icon={faX} />}
+          icon={<FontAwesomeIcon icon={faX} size="sm" />}
           onClick={handleClose}
         />
       )}

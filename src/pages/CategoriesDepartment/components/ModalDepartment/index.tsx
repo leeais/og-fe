@@ -1,33 +1,51 @@
 import LgModal from "@/components/_common/LgModal";
-import { Form, Image, Input } from "antd";
+import { Form, Image, Input, message } from "antd";
 import type { DepartmentFormValues } from "./utils";
 import { useModal } from "@/hooks/useModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { departmentService } from "@/services/department.service";
+import type { Department } from "../TableDepartments/utils";
 
 interface ModalDepartmentProps {
   name: string;
 }
 
 export default function ModalDepartment({ name }: ModalDepartmentProps) {
-  const { closeModal } = useModal();
-  const [form] = Form.useForm();
+  const { closeModal, getData } = useModal();
+  const [form] = Form.useForm<DepartmentFormValues>();
   const [avatar, setAvatar] = useState<File>();
   const queryClient = useQueryClient();
+  const { active } = useModal();
 
-  const mutation = useMutation({
-    mutationFn: departmentService.createDepartment,
+  const department = getData() as Department;
+
+  const { mutate } = useMutation({
+    mutationFn: (data: DepartmentFormValues) => {
+      if (department) {
+        return departmentService.updateDepartment(department.id, data);
+      }
+      return departmentService.createDepartment(data);
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["departments"] });
+      queryClient.invalidateQueries({
+        queryKey: ["departments"],
+      });
       form.resetFields();
       setAvatar(undefined);
       closeModal();
+      message.success(
+        department ? "Cập nhật thành công" : "Thêm mới thành công"
+      );
     },
   });
 
+  useEffect(() => {
+    if (department && active === name) form.setFieldsValue(department);
+  }, [form, department, active, name]);
+
   function handleSubmit(values: DepartmentFormValues) {
-    mutation.mutate(values);
+    mutate(values);
   }
   return (
     <LgModal
@@ -48,7 +66,7 @@ export default function ModalDepartment({ name }: ModalDepartmentProps) {
         <Form.Item label="Tên phòng ban" name="name" required>
           <Input />
         </Form.Item>
-        <Form.Item label="Tên ngắn gọn" name="shortName">
+        <Form.Item label="Tên ngắn gọn" name="shortName" required>
           <Input />
         </Form.Item>
         <div className="flex items-center gap-4">

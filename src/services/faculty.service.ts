@@ -5,16 +5,16 @@ class FacultyService {
   getFaculties() {
     return api.get("/faculties");
   }
-  getFaculty(id: string) {
+  getFaculty(id: number) {
     return api.get(`/faculties/${id}`);
   }
   createFaculty(data: FacultyFormValues) {
     return api.post("/faculties", data);
   }
-  updateFaculty(id: string, data: Partial<FacultyFormValues>) {
+  updateFaculty(id: number, data: Partial<FacultyFormValues>) {
     return api.put(`/faculties/${id}`, data);
   }
-  deleteFaculty(id: string) {
+  deleteFaculty(id: number) {
     return api.delete(`/faculties/${id}`);
   }
 }

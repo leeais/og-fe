@@ -25,6 +25,9 @@
   input::placeholder {
     @apply font-normal;
   }
+  input {
+    @apply font-normal;
+  }
   /* label */
   label {
     @apply flex items-center;
@@ -40,12 +43,12 @@
     @apply p-0;
   }
   .ant-modal-header {
-    @apply px-6 py-2 border-b border-border bg-primary;
+    @apply px-6 py-2 border-b border-border m-0;
   }
   .ant-modal-body {
     @apply p-4 px-6;
   }
   .ant-modal-footer {
-    @apply px-6 py-2 border-t border-border;
+    @apply p-6 pt-2 m-0;
   }
 }

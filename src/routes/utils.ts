@@ -50,4 +50,5 @@ export const breadcrumbNameMap = {
   [ROUTES.ADMIN_GENERAL_ACCOUNTS]: "Quản lý tài khoản",
   [ROUTES.ADMIN_GENERAL_STUDENTS]: "Quản lý sinh viên",
   [ROUTES.ADMIN_GENERAL_INSTRUCTORS]: "Quản lý giáo viên",
+  [ROUTES.ADMIN_GENERAL_ROLES]: "Phân quyền",
 };

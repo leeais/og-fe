@@ -48,12 +48,9 @@ const useModalStore = create<UseModalStore>((set, get) => ({
         };
       } else {
         return {
-          opening: state.opening.slice(0, -1),
-          stackModals: state.stackModals.slice(0, -1),
-          active:
-            state.opening.length > 1
-              ? state.opening[state.opening.length - 2]
-              : null,
+          stackModals: [],
+          opening: [],
+          active: null,
         };
       }
     }),
@@ -61,6 +58,9 @@ const useModalStore = create<UseModalStore>((set, get) => ({
     const state = get() as ModalState;
     if (name) {
       const modal = state.stackModals.find((m) => m.name === name);
+      return modal ? modal.data : null;
+    } else {
+      const modal = state.stackModals.find((m) => m.name === state.active);
       return modal ? modal.data : null;
     }
   },
