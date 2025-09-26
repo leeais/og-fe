@@ -27,8 +27,10 @@ const RequestProcessing = lazy(() => import("@/pages/RequestProcessing"));
 const Procedures = lazy(() => import("@/pages/Procedures"));
 const Categories = lazy(() => import("@/pages/Categories"));
 const CategoriesProcedures = lazy(() => import("@/pages/CategoriesProcedures"));
+const CategoriesClasses = lazy(() => import("@/pages/CategoriesClasses"));
+const CategoriesBatches = lazy(() => import("@/pages/CategoriesBatches"));
 const CategoriesDepartments = lazy(
-  () => import("@/pages/CategoriesDepartment")
+  () => import("@/pages/CategoriesDepartments")
 );
 const CategoriesFaculties = lazy(() => import("@/pages/CategoriesFaculties"));
 const General = lazy(() => import("@/pages/General"));
@@ -36,6 +38,10 @@ const GeneralInstructors = lazy(() => import("@/pages/GeneralInstructors"));
 const GeneralStudents = lazy(() => import("@/pages/GeneralStudents"));
 const GeneralAccounts = lazy(() => import("@/pages/GeneralAccounts"));
 const GeneralRoles = lazy(() => import("@/pages/GeneralRoles"));
+const GeneralPaymentMethods = lazy(
+  () => import("@/pages/GeneralPaymentMethods")
+);
+const GeneralSessions = lazy(() => import("@/pages/GeneralSessions"));
 
 const router = createBrowserRouter([
   // have layout
@@ -148,6 +154,14 @@ const router = createBrowserRouter([
             element: <CategoriesProcedures />,
           },
           {
+            path: ROUTES.ADMIN_CATEGORIES_CLASSES,
+            element: <CategoriesClasses />,
+          },
+          {
+            path: ROUTES.ADMIN_CATEGORIES_BATCHES,
+            element: <CategoriesBatches />,
+          },
+          {
             path: ROUTES.ADMIN_GENERAL,
             element: <General />,
           },
@@ -166,6 +180,14 @@ const router = createBrowserRouter([
           {
             path: ROUTES.ADMIN_GENERAL_STUDENTS,
             element: <GeneralStudents />,
+          },
+          {
+            path: ROUTES.ADMIN_GENERAL_PAYMENT_METHODS,
+            element: <GeneralPaymentMethods />,
+          },
+          {
+            path: ROUTES.ADMIN_GENERAL_SESSIONS,
+            element: <GeneralSessions />,
           },
         ],
       },

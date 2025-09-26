@@ -5,7 +5,7 @@ import { useModal } from "@/hooks/useModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { procedureService } from "@/services/procedure.service";
 import { departmentService } from "@/services/department.service";
-import type { Department } from "@/pages/CategoriesDepartment/components/TableDepartments/utils";
+import type { Department } from "@/pages/CategoriesDepartments/components/TableDepartments/utils";
 import { facultyService } from "@/services/faculty.service";
 import type { Faculty } from "@/pages/CategoriesFaculties/components/TableFaculties/utils";
 import { useEffect } from "react";
@@ -89,6 +89,15 @@ export default function ModalProcedures({ name }: ModalProceduresProps) {
           <div className="flex items-center gap-2">
             <Form.Item className="flex-1 m-0" name="facultyId">
               <Select
+                showSearch
+                allowClear
+                optionFilterProp="children"
+                filterOption={(input, options) =>
+                  (options?.label ?? "")
+                    .toString()
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
                 options={
                   faculties?.data.map((item: Faculty) => ({
                     label: item.name,
@@ -101,6 +110,15 @@ export default function ModalProcedures({ name }: ModalProceduresProps) {
             <span>hoặc</span>
             <Form.Item className="flex-1 m-0" name="departmentId">
               <Select
+                showSearch
+                allowClear
+                optionFilterProp="children"
+                filterOption={(input, options) =>
+                  (options?.label ?? "")
+                    .toString()
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
                 options={
                   departments?.data.map((item: Department) => ({
                     label: item.name,

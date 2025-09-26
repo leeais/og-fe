@@ -43,7 +43,7 @@ export default function LgTable<T>({
 }: LgTableProps<T>) {
   const [internalKeys, setInternalKeys] = useState<Key[]>([]);
   const selectedRowKeys = rowSelection?.selectedRowKeys ?? internalKeys;
-  const { openModal, getData, closeModal, stackModals } = useModal();
+  const { openModal, getData, closeModal } = useModal();
 
   const handleChange = (keys: Key[], rows: T[]) => {
     if (rowSelection?.onSelectedRowKeysChange) {
@@ -151,7 +151,6 @@ export default function LgTable<T>({
               onClick={() => {
                 rowActions?.onDelete?.(getData(CONFIRM_DELETE_MODAL_NAME) as T);
                 closeModal(CONFIRM_DELETE_MODAL_NAME);
-                console.log(stackModals);
               }}
             >
               Xóa

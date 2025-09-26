@@ -1,7 +1,7 @@
-import type { DepartmentFormData } from "@/pages/CategoriesDepartment/components/ModalDepartment/utils";
+import type { DepartmentFormData } from "@/pages/CategoriesDepartments/components/ModalDepartment/utils";
 import api from "./api.service";
 
-class DepartmentsService {
+class DepartmentService {
   getDepartments() {
     return api.get("/departments");
   }
@@ -19,4 +19,4 @@ class DepartmentsService {
   }
 }
 
-export const departmentService = new DepartmentsService();
+export const departmentService = new DepartmentService();
