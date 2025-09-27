@@ -13,6 +13,10 @@
 }
 
 @layer components {
+  /* pagination */
+  .ant-pagination {
+    @apply m-2 gap-1;
+  }
   /* upload */
   .ant-upload-list {
     @apply mt-1;

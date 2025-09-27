@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cn } from "@/utils/tailwinds";
 import { Button, Table, type TableProps } from "antd";
 import styles from "./styles.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import type { ColumnType } from "antd/es/table";
-import { useState, type Key } from "react";
 import LgModal from "../LgModal";
 import { useModal } from "@/hooks/useModal";
 import { CONFIRM_DELETE_MODAL_NAME } from "./utils";
+import type { Key, ReactNode } from "react";
 
 interface LgTableProps<T>
   extends Omit<
@@ -18,10 +19,11 @@ interface LgTableProps<T>
   size?: TableProps<T>["size"];
   columns: TableProps<T>["columns"];
   dataSource: TableProps<T>["dataSource"];
+  maxHeight?: number;
   rowSelection?: {
-    selectedRowKeys?: Key[];
-    onSelectedRowKeysChange?: (keys: Key[]) => void;
-    onSelectedRowsChange?: (keys: Key[], rows: T[]) => void;
+    selectedRowKeys?: Id[];
+    onSelectedRowKeysChange?: (ids: Id[]) => void;
+    onSelectedRowsChange?: (ids: Id[], rows: T[]) => void;
   };
   isLoading?: boolean;
   rowActions?: {
@@ -39,44 +41,64 @@ export default function LgTable<T>({
   rowSelection,
   isLoading,
   rowActions,
+  maxHeight,
   ...props
 }: LgTableProps<T>) {
-  const [internalKeys, setInternalKeys] = useState<Key[]>([]);
-  const selectedRowKeys = rowSelection?.selectedRowKeys ?? internalKeys;
   const { openModal, getData, closeModal } = useModal();
 
-  const handleChange = (keys: Key[], rows: T[]) => {
+  const handleChange = (
+    keys: Key[],
+    selectedRows: T[],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _info: { type: any }
+  ) => {
+    const ids = keys.map((key) => key as Id);
+
     if (rowSelection?.onSelectedRowKeysChange) {
-      rowSelection.onSelectedRowKeysChange(keys);
-    } else {
-      setInternalKeys(keys);
+      rowSelection.onSelectedRowKeysChange(ids);
     }
 
     if (rowSelection?.onSelectedRowsChange) {
-      rowSelection.onSelectedRowsChange(keys, rows);
+      rowSelection.onSelectedRowsChange(ids, selectedRows);
     }
   };
 
-  const rowSelectionColumn: TableProps<T>["rowSelection"] = {
-    selectedRowKeys,
-    onChange: handleChange,
-    renderCell: (
-      _value: boolean,
-      _record: T,
-      index: number,
-      originNode: React.ReactNode
-    ) => {
-      return (
-        <div className="flex items-center gap-1">
-          {originNode}
-          <span>{index + 1}</span>
-        </div>
-      );
+  const indexColumn: ColumnType<T> = {
+    key: "index",
+    title: "STT",
+    dataIndex: "index",
+    fixed: "left",
+    align: "center",
+    width: 60,
+    render: (_: any, __: T, index: number) => {
+      const { current = 1, pageSize = 10 } = props.pagination || {};
+      const actualIndex = (current - 1) * pageSize + index + 1;
+      return <span>{actualIndex}</span>;
     },
-    columnWidth: 60,
-    fixed: true,
-    align: "left",
   };
+
+  const rowSelectionColumn: TableProps<T>["rowSelection"] = rowSelection
+    ? {
+        selectedRowKeys: rowSelection.selectedRowKeys?.map((id) => id as Key),
+        onChange: handleChange,
+        renderCell: (
+          _value: boolean,
+          _record: T,
+          index: number,
+          originNode: ReactNode
+        ) => {
+          return (
+            <div className="flex items-center gap-1">
+              {originNode}
+              <span>{index + 1}</span>
+            </div>
+          );
+        },
+        columnWidth: 60,
+        fixed: true,
+        align: "left",
+      }
+    : undefined;
 
   const actionsColumn: ColumnType<T> = {
     key: "actions",
@@ -85,7 +107,6 @@ export default function LgTable<T>({
     fixed: "right",
     align: "center",
     width: 100,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_: any, record: T) => (
       <div className="flex gap-1 items-center justify-center">
         {rowActions?.onEdit && (
@@ -117,7 +138,11 @@ export default function LgTable<T>({
     ),
   };
 
-  const mergedColumns = [...columns!, actionsColumn];
+  const mergedColumns = [
+    ...(rowSelection ? [] : [indexColumn]),
+    ...columns!,
+    actionsColumn,
+  ];
 
   return (
     <div className={cn("border rounded-sm overflow-hidden", wrapperClassnames)}>
@@ -129,9 +154,10 @@ export default function LgTable<T>({
         dataSource={dataSource}
         size={size}
         loading={isLoading}
-        scroll={{ x: "max-content" }}
+        scroll={{ x: "max-content", y: maxHeight ?? undefined }}
         pagination={{
           pageSize: 10,
+          ...props.pagination,
         }}
         {...props}
       />

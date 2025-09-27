@@ -1,4 +1,4 @@
-import type { ProcedureFormData } from "@/pages/CategoriesProcedures/components/ModalProcedues/utils";
+import type { ProcedureFormData } from "@/pages/CategoriesProcedures/components/ModalProcedures/utils";
 import api from "./api.service";
 
 class ProcedureService {

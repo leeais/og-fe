@@ -4,7 +4,7 @@ import { Button } from "antd";
 import TableProcedures from "./components/TableProcedures";
 import { useModal } from "@/hooks/useModal";
 import { PROCEDURES_MODAL_NAME } from "./utils";
-import ModalProcedures from "./components/ModalProcedues";
+import ModalProcedures from "./components/ModalProcedures";
 import PageWrapper from "@/components/_layout/PageWrapper";
 import PageContent from "@/components/_layout/PageContent";
 import PageHeader from "@/components/_layout/PageHeader";
