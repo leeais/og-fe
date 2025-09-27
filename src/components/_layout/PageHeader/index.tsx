@@ -12,8 +12,9 @@ import { breadcrumbNameMap, ROUTES } from "@/routes/utils";
 import { cn } from "@/utils/tailwinds";
 import { useAuth } from "@/hooks/useAuth";
 import { ROLES } from "@/config/roles";
+import type { PropsWithChildren } from "react";
 
-export default function SubHeader() {
+export default function PageHeader({ children }: PropsWithChildren) {
   const { toggleSidebar, isExpand } = useSidebar();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -24,15 +25,15 @@ export default function SubHeader() {
     const url = "/" + pathSnippets.slice(0, index + 1).join("/");
     const label = breadcrumbNameMap[url] ?? url.split("/").pop();
 
-    const routeActiving = pathname === url;
+    const routeActive = pathname === url;
 
     return {
       title: (
         <span
           className={cn("hover:text-primary cursor-pointer", {
-            "text-primary cursor-default font-semibold": routeActiving,
+            "text-primary cursor-default font-semibold": routeActive,
           })}
-          onClick={() => !routeActiving && navigate(url)}
+          onClick={() => !routeActive && navigate(url)}
         >
           {label}
         </span>
@@ -55,9 +56,8 @@ export default function SubHeader() {
       ),
     });
   return (
-    <div className="relative">
-      <div className="h-10 w-full" />
-      <div className="h-10 w-full flex items-center border-b gap-2 px-2 bg-background fixed top-12 z-40">
+    <div className="h-12 flex items-center justify-between border-b pl-2 pr-4 bg-background z-40 transition-[width] delay-200 ease-in-out sticky top-0">
+      <div className="flex items-center gap-2">
         <Button
           type="text"
           icon={
@@ -67,6 +67,9 @@ export default function SubHeader() {
         />
         <Divider size="large" type="vertical" />
         <Breadcrumb items={breadcrumbList} />
+      </div>
+      <div className="flex items-center gap-2 flex-1 justify-end">
+        {children}
       </div>
     </div>
   );
